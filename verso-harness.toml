@@ -9,6 +9,9 @@ default_chapters = [
   "CarlesonBlueprint/Chapters/Main.lean",
 ]
 
+[lt.source_files]
+"CarlesonBlueprint/Chapters/Main.lean" = ["Carleson/blueprint/src/chapter/main.tex"]
+
 [lt.node_kinds]
 theorem = "theorem"
 definition = "definition"
