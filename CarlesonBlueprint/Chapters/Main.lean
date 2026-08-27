@@ -13396,6 +13396,483 @@ $$`\sum_{n=0}^\infty 2^{-\frac nx}
 \end{proof}
 ```
 
+:::lemma_ "estimate-x-shift" (lean := "estimate_x_shift") (uses := "geometric-series-estimate")
+Let $`0<r`, $`x\in X`, and let $`g:X\to\C` be a bounded measurable function
+supported on a set of finite measure. Then for all $`x'` with
+$`\rho(x,x')\le r`, we have
+$$`
+\left|T_r g(x)-T_r g(x')\right|
+\le 2^{a^3+2a+2}Mg(x).
+`
+:::
+
+```tex "estimate-x-shift" (slot := statement)
+\begin{lemma}[estimate x shift]
+\label{estimate-x-shift}
+\leanok
+\lean{estimate_x_shift}
+\uses{geometric-series-estimate}
+Let $0<r$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+Then for all $x'$ with $\rho(x,x')\le r$.
+\begin{equation*}
+\left| T_r g(x) - T_r g(x') \right|
+\le 2^{a^3 + 2a + 2} Mg(x)\, .
+\end{equation*}
+\end{lemma}
+```
+
+:::proof "estimate-x-shift"
+Proof. By definition,
+$$`
+\left|T_rg(x)-T_rg(x')\right|
+=\left|\int_{r\le\rho(x,y)}K(x,y)g(y)\,d\mu(y)
+-\int_{r\le\rho(x',y)}K(x',y)g(y)\,d\mu(y)\right|.
+`
+We split the first integral into the domains $`r\le\rho(x,y)<2r` and
+$`2r\le\rho(x,y)`. The integral over the first domain is estimated by
+$$`
+\int_{r\le\rho(x,y)<2r}|K(x,y)||g(y)|\,d\mu(y).
+`
+For the second domain, $`\rho(x,x')\le r` and the triangle inequality imply
+$`r\le\rho(x',y)`. We therefore combine it with the corresponding part of
+the second integral and estimate it by
+$$`
+\left|\int_{2r\le\rho(x,y)}(K(x,y)-K(x',y))g(y)\,d\mu(y)\right|.
+`
+The remaining part of the second integral is estimated by
+$$`
+\int_{r\le\rho(x',y),\ r\le\rho(x,y)<2r}|K(x',y)||g(y)|\,d\mu(y).
+`
+
+Using the bound on $`K` and the doubling condition, the first term is at most
+$$`
+\frac{2^{a^3}}{\mu(B(x,r))}
+\int_{r\le\rho(x,y)<2r}|g(y)|\,d\mu(y)
+\le
+\frac{2^{a^3}2^a}{\mu(B(x,2r))}
+\int_{\rho(x,y)<2r}|g(y)|\,d\mu(y)
+\le 2^{a^3+a}Mg(x).
+`
+Similarly, on the domain of the third term the triangle inequality and the
+assumption on $`x'` give $`\rho(x',y)<3r`, so that term is at most
+$$`
+\frac{2^{a^3}}{\mu(B(x',r))}
+\int_{\rho(x',y)<4r}|g(y)|\,d\mu(y)
+\le 2^{a^3+2a}Mg(x).
+`
+
+For the remaining term, kernel smoothness gives
+$$`
+\int_{2r\le\rho(x,y)}
+\left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac1a}
+\frac{2^{a^3}}{V(x,y)}|g(y)|\,d\mu(y).
+`
+Decomposing into dyadic annuli and using the triangle inequality bounds this by
+$$`
+\begin{aligned}
+&\sum_{j=1}^\infty\int_{2^jr\le\rho(x,y)<2^{j+1}r}
+\left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac1a}
+\frac{2^{a^3}}{V(x,y)}|g(y)|\,d\mu(y)\\
+&\quad\le
+\sum_{j=1}^\infty 2^{-\frac ja}
+\frac{2^{a^3+a}}{\mu(B(x,2^{j+1}r))}
+\int_{\rho(x,y)<2^{j+1}r}|g(y)|\,d\mu(y)\\
+&\quad\le 2^{a^3+a}\sum_{j=1}^\infty2^{-\frac ja}Mg(x)
+\le 2^{a^3+2a}Mg(x),
+\end{aligned}
+`
+where the last step uses {bpref "geometric-series-estimate"}[]. Summing the
+three estimates proves the lemma.
+:::
+
+```tex "estimate-x-shift" (slot := proof)
+\begin{proof}
+\proves{estimate-x-shift}
+\leanok
+By definition,
+\begin{equation}
+\label{xx'difference}
+\left| T_r g(x) - T_r g(x') \right|
+=\left|\int_{r\le\rho(x,y)} K(x,y) g(y) \,d\mu(y)
+-\int_{r\le\rho(x',y)}
+K(x',y) g(y)\, d\mu(y)
+\right| \, .
+\end{equation}
+We split the first integral in \eqref{xx'difference}
+into the domains $r\le\rho(x,y)<2r$
+and $2r\le\rho(x,y)$. The integral over the first domain we estimate
+by $\eqref{firstxx'}$ below.
+For the second domain, we
+observe with $\rho(x,x')\le r$ and the triangle inequality that $r\le\rho(x',y)$. We therefore combine on this domain with the
+corresponding part of the second integral in \eqref{xx'difference} and estimate that by $\eqref{secondxx'}$
+below. The remaining part of the second integral in
+\eqref{xx'difference} we estimate by $\eqref{thirdxx'}$.
+Overall, we have estimated \eqref{xx'difference} by
+\begin{equation}
+\label{firstxx'}
+\int_{r\le\rho(x,y)< 2r} |K(x,y)| |g(y)| \,d\mu(y)
+\end{equation}
+\begin{equation}
+\label{secondxx'}
+  +  \left|\int_{2r\le\rho(x,y)} (K(x,y)-K(x',y)) g(y) \,d\mu(y)
+\right|
+\end{equation}
+\begin{equation}
+\label{thirdxx'}
+  +\int_{r\le\rho(x',y), r\le\rho(x,y)<2r}
+|K(x',y)| |g(y)|\, d\mu(y)\,.
+\end{equation}
+Using the bound on $K$ in \eqref{eqkernel-size} and the doubling condition \eqref{doublingx}, we estimate \eqref{firstxx'} by
+\begin{align}
+ \int_{r\le\rho(x,y)<2r} \frac{2^{a^3}}{V(x,y)} |g(y)| \,d\mu(y)\,
+&\le
+\frac{2^{a^3}}{\mu(B(x,r))} \int_{r\le\rho(x,y)<2r}
+|g(y)| \, d\mu(y)\, \\
+\label{firstxx'b}
+&\le
+\frac{2^{a^3} \cdot 2^a}{\mu(B(x,2r))} \int_{\rho(x,y)<2r}
+|g(y)| \, d\mu(y)\,
+.
+\end{align}
+Using the definition of $Mg$, we estimate
+\eqref{firstxx'b} by
+\begin{equation}
+\label{firstxx'c}
+ \le 2^{a^3 + a} {Mg(x)}\, .
+\end{equation}
+Similarly, in the domain of \eqref{thirdxx'}
+we note by the triangle inequality
+and assumption on $x'$ that $\rho(x',y)<3r$ and thus we estimate
+\eqref{thirdxx'}
+by
+\begin{equation}
+\label{thirdxx'b}
+\frac{2^{a^3}}{\mu(B(x',r))} \int_{\rho(x',y)<4r}
+|g(y)| \, d\mu(y)\le 2^{a^3 + 2a} Mg(x)
+\end{equation}
+
+We turn to the remaining term. Using \eqref{eqkernel-x-smooth}, we estimate \eqref{secondxx'} by
+\begin{equation}\label{secondxx'b}
+ \int_{2r\le\rho(x,y)} \left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)| \,d\mu(y)
+\end{equation}
+We decompose and estimate
+\eqref{secondxx'}
+with the triangle inequality by
+\begin{align}
+ &\sum_{j=1}^\infty  \int_{2^jr\le\rho(x,y)< 2^{j+1}r}
+ \left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)| \,d\mu(y)\, \\
+ \le&
+ \sum_{j=1}^\infty \left( 2^{-j} \right)^{\frac{1}{a}} \int_{2^jr\le\rho(x,y)< 2^{j+1}r} \frac{2^{a^3}}{\mu(B(x,2^j r))} |g(y)| \,d\mu(y) \\
+ \le&
+\sum_{j=1}^\infty 2^{-\frac{j}{a}} \frac{2^{a^3 + a}}{\mu(B(x,2^{j+1} r))} \int_{\rho(x,y)<2^{j+1}r}
+|g(y)| \, d\mu(y) \\
+\label{secondxx'c}
+\le& 2^{a^3 + a} \sum_{j=1}^\infty 2^{-\frac{j}{a}} Mg(x)\,.
+\end{align}
+Using \Cref{geometric-series-estimate}, we estimate
+\eqref{secondxx'c} by
+\begin{equation}\label{secondxx'd}
+\le 2^{a^3 + 2a} Mg(x) \,.
+\end{equation}
+Summing the estimates
+for \eqref{firstxx'},
+\eqref{secondxx'}, and
+\eqref{thirdxx'}
+proves the lemma.
+\end{proof}
+```
+
+:::lemma_ "Cotlar-control" (lean := "cotlar_control") (uses := "estimate-x-shift")
+Let $`0<r\le R`, $`x\in X`, and let $`g:X\to\C` be a bounded measurable
+function supported on a set of finite measure. Then for all $`x'\in X` with
+$`\rho(x,x')\le\frac R4`, we have
+$$`
+\left|T_Rg(x)\right|
+\le
+\left|T_r\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(x')\right|
++2^{a^3+4a+1}Mg(x).
+`
+:::
+
+```tex "Cotlar-control" (slot := statement)
+\begin{lemma}[Cotlar control]
+\label{Cotlar-control}
+\leanok
+\lean{cotlar_control}
+\uses{estimate-x-shift}
+Let $0<r\le R$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+Then for all $x'\in X$ with $\rho(x,x')\le\frac {R}{4}$ we have
+\begin{equation}\label{eq-cotlar-control}
+\left|T_R g(x)
+\right|\le
+|T_r(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')| +
+2^{a^3 + 4a + 1} Mg(x)\, .
+\end{equation}
+\end{lemma}
+```
+
+:::proof "Cotlar-control"
+Proof. Let $`x` and $`x'` be given with $`\rho(x,x')\le\frac R4`. By
+{bpref "estimate-x-shift"}[],
+$$`
+|T_Rg(x)|\le |T_Rg(x')|+2^{a^3+2a+2}Mg(x).
+`
+We have
+$$`
+T_Rg(x')=\int_{R\le\rho(x',y)}K(x',y)g(y)\,d\mu(y).
+`
+On this domain, $`\frac R2\le\rho(x,y)`, hence
+$$`
+\begin{aligned}
+T_Rg(x')
+&=\int_{R\le\rho(x',y)}K(x',y)
+\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(y)\,d\mu(y)\\
+&=T_R\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(x').
+\end{aligned}
+`
+It follows that
+$$`
+|T_Rg(x)|\le
+\left|T_R\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(x')\right|
++2^{a^3+2a+2}Mg(x).
+`
+Moreover,
+$$`
+\begin{aligned}
+&(T_r-T_R)\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(x')\\
+&\quad=\int_{B(x',R)\setminus B(x',r)}K(x',y)
+\left(g-g\mathbf{1}_{B(x,\frac R2)}\right)(y)\,d\mu(y)\\
+&\quad=\int_{B(x',R)\setminus(B(x',r)\cup B(x,\frac R2))}
+K(x',y)g(y)\,d\mu(y).
+\end{aligned}
+`
+Since $`\frac R2\le\rho(x,y)` together with $`\rho(x,x')\le\frac R4`
+implies $`\frac R4\le\rho(x',y)`, the absolute value of this integral is at
+most
+$$`
+\begin{aligned}
+&\frac{2^{a^3}}{\mu(B(x',\frac R4))}
+\int_{B(x,2R)\setminus B(x',\frac R4)}|g(y)|\,d\mu(y)\\
+&\quad\le \frac{2^{a^3+a}}{\mu(B(x',\frac R2))}
+\int_{B(x,2R)}|g(y)|\,d\mu(y)\\
+&\quad\le 2^{a^3+a}
+\frac{\mu(B(x,2R))}{\mu(B(x,\frac R4))}Mg(x)
+\le 2^{a^3+4a}Mg(x).
+\end{aligned}
+`
+The triangle inequality now proves the lemma.
+:::
+
+```tex "Cotlar-control" (slot := proof)
+\begin{proof}
+\leanok
+Let $x$ and $x'$ be given with $\rho(x,x')\le\frac {R}{4}$.
+By \Cref{estimate-x-shift}, we estimate
+the left-hand-side of
+\eqref{eq-cotlar-control} by
+\begin{equation}\label{eqcotlar0}
+|T_R(g)(x')|+
+2^{a^3 + 2a + 2} Mg(x)\,.
+\end{equation}
+We  have
+\begin{equation}
+\label{eqcotlar-1}
+T_R(g)(x')=
+\int_{R\le\rho(x',y)} K(x',y) g(y) \, d\mu(y)\, .
+\end{equation}
+On the domain $R\le\rho(x',y)$, we have $\frac {R}2\le\rho(x,y)$. Hence we may write
+for \eqref{eqcotlar-1}
+\begin{equation*}
+T_R(g)(x')=\int_{R\le\rho(x',y)} K(x',y) (g-g\mathbf{1}_{B(x,\frac {R} 2)})(y) \,d\mu(y)
+\end{equation*}
+\begin{equation}\label{eqcotlar1}
+=T_R(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')\, .
+\end{equation}
+Combining the estimate \eqref{eqcotlar0} with the identification \eqref{eqcotlar1}, we obtain
+\begin{equation}\label{eqcotlar5}
+\left|T_R g(x)
+\right|\le
+|T_R(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')|+
+2^{a^3 + 2a + 2} Mg(x)\, .
+\end{equation}
+We  have
+\begin{equation*}
+(T_r-T_R)(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')
+\end{equation*}
+\begin{equation*}
+= \int_{B(x',R)\setminus B(x',r)} K(x',y) (g-g\mathbf{1}_{B(x,\frac {R} 2)})(y) \,d\mu(y)
+\end{equation*}
+\begin{equation}\label{eqcotlar2}
+= \int_{B(x',R)\setminus (B(x',r) \cup B(x,\frac{R}{2}))} K(x',y) g(y) \,d\mu(y)
+\end{equation}
+As $\frac{R}{2}\le\rho(x,y)$ together with $\rho(x,x')\le\frac {R}{4}$ implies
+$\frac {R}{4}\le\rho(x',y)$, we can estimate the absolute value of \eqref{eqcotlar2} with \eqref{eqkernel-size} by
+\begin{align*}
+\le &\frac{2^{a^3}}{\mu(B(x',\frac{R}{4}))} \int_{B(x,2R)\setminus B(x',\frac{R}{4})}
+|g(y)|\, d\mu(y) \\
+\le &\frac{2^{a^3+a}}{\mu(B(x',\frac{R}{2}))} \int_{B(x,2R)}
+|g(y)|\, d\mu(y) \\
+\le &2^{a^3+a} \frac{\mu(B(x,2R))}{\mu(B(x,\frac{R}{4}))} Mg(x) \le 2^{a^3 + 4a} Mg(x)\, .
+\end{align*}
+
+By the triangle inequality, \eqref{eq-cotlar-control} follows now from \eqref{eqcotlar5} and the estimate for \eqref{eqcotlar2}.
+\end{proof}
+```
+
+:::lemma_ "Cotlar-sets" (lean := "cotlar_set_F₁, cotlar_set_F₂") (uses := "calderon-zygmund-weak-1-1")
+Assume the two-sided $`T_r` bound. Let $`0<r\le R`, $`x\in X`, and let
+$`g:X\to\C` be a bounded measurable function supported on a set of finite
+measure. Let $`F_1` be the set of all $`x'\in B(x,\frac R4)` such that
+$$`|T_rg(x')|>4M(T_rg)(x).`
+Then $`\mu(F_1)\le\mu(B(x,\frac R4))/4`.
+
+Moreover, let $`F_2` be the set of all $`x'\in B(x,\frac R4)` such that
+$$`
+\left|T_r\left(g\mathbf{1}_{B(x,\frac R2)}\right)(x')\right|
+>2^{a^3+20a+2}Mg(x).
+`
+Then $`\mu(F_2)\le\mu(B(x,\frac R4))/4`.
+:::
+
+```tex "Cotlar-sets" (slot := statement)
+\begin{lemma}[Cotlar sets]
+\label{Cotlar-sets}
+\leanok
+\lean{cotlar_set_F₁, cotlar_set_F₂}
+\uses{calderon-zygmund-weak-1-1}
+Assume that \eqref{two-sided-Hr-bound-assumption} holds. Let $0<r\le R$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+Then the measure $|F_1|$ of the set $F_1$ of all $x'\in B(x,\frac {R} 4)$ such that
+\begin{equation}
+\label{first-cotlar-exception}
+    |T_rg(x')|> 4 M(T_rg)(x)
+\end{equation}
+is less than or equal to $\mu(B(x,\frac{R}{4}))/4$.
+Moreover,  the measure $|F_2|$ of the set $F_2$ of all $x'\in
+B(x,\frac {R} 4)$ such that
+\begin{equation}
+\label{second-cotlar-exception}
+    |T_r(g\mathbf{1}_{B(x,\frac {R} 2)})(x')| > 2^{a^3 + 20a + 2} Mg(x)
+\end{equation}
+is less than or equal to  $\mu(B(x,\frac{R}{4}))/4$.
+\end{lemma}
+```
+
+:::proof "Cotlar-sets"
+Proof. Let $`r`, $`R`, $`x`, and $`g` be given. If $`M(T_rg)(x)=0`, then
+$`T_rg` is zero almost everywhere and the estimate for $`F_1` is trivial.
+Assume $`M(T_rg)(x)>0`. Then
+$$`
+\begin{aligned}
+M(T_rg)(x)
+&\ge \frac1{\mu(B(x,\frac R4))}
+\int_{B(x,\frac R4)}|T_rg(x')|\,dx'\\
+&\ge \frac1{\mu(B(x,\frac R4))}
+\int_{F_1}4M(T_rg)(x)\,dx'.
+\end{aligned}
+`
+Dividing by $`M(T_rg)(x)` gives
+$$`1\ge\frac4{\mu(B(x,\frac R4))}\mu(F_1),`
+which is the desired bound for $`F_1`.
+
+For $`F_2`, we may similarly assume $`Mg(x)>0`. By
+{bpref "calderon-zygmund-weak-1-1"}[], its measure is at most
+$$`
+\frac{2^{a^3+19a}}{2^{a^3+20a+2}Mg(x)}
+\int\left|g\mathbf{1}_{B(x,\frac R2)}\right|(y)\,d\mu(y)
+\le \frac1{2^{a+2}Mg(x)}\mu(B(x,\tfrac R2))Mg(x)
+\le\frac{\mu(B(x,\frac R4))}{4}.
+`
+This proves the desired bound for $`F_2`.
+:::
+
+```tex "Cotlar-sets" (slot := proof)
+\begin{proof}
+\leanok
+Let $r$, $R$, $x$ and $g$ be given.
+If $M(T_rg)(x)=0$, then $T_rg$ is zero almost everywhere and the estimate on $|F_1|$ is trivial.
+Assume $M(T_rg)(x)>0$.
+We have with \eqref{first-cotlar-exception}
+\begin{equation}
+    M(T_rg)(x)\ge
+    \frac 1{\mu(B(x,\frac{R}{4}))}\int_{B(x,\frac{R}{4})}|T_rg(x')|\, dx'
+\end{equation}
+\begin{equation}
+    \ge
+    \frac 1{\mu(B(x,\frac{R}{4}))}\int_{F_1} 4 M(T_rg)(x)\, dx' \,.
+\end{equation}
+Dividing by $M(T_rg)(x)$ gives
+\begin{equation}
+    1\ge \frac{4}{\mu(B(x,\frac{R}{4}))} |F_1|\, .
+\end{equation}
+This gives the desired bound for the measure of $F_1$.
+We turn to the set $F_2$. Similarly as above we may assume $Mg(x)>0$.
+The set $F_2$ is then estimated with \Cref{calderon-zygmund-weak-1-1} by
+\begin{equation}
+   \frac {2^{a^3+19a}}{2^{a^3 + 20a + 2}Mg(x)}\int |g\mathbf{1}_{B(x,\frac {R}2)}|(y)\, d\mu(y)
+\end{equation}
+\begin{equation}
+   \le \frac {1}{2^{a+2} Mg(x)}\mu(B(x,\frac {R}{2})) Mg(x) \le \frac{\mu(B(x,\frac {R}{4}))}{4} \,.
+\end{equation}
+This gives the desired bound for the measure of $F_2$.
+\end{proof}
+```
+
+:::lemma_ "Cotlar-estimate" (lean := "cotlar_estimate") (uses := "Cotlar-control, Cotlar-sets")
+Assume the two-sided $`T_r` bound. Let $`0<r\le R`, $`x\in X`, and let
+$`g:X\to\C` be a bounded measurable function supported on a set of finite
+measure. Then
+$$`
+|T_Rg(x)|\le 2^2M(T_rg)(x)+2^{a^3+20a+3}Mg(x).
+`
+:::
+
+```tex "Cotlar-estimate" (slot := statement)
+\begin{lemma}[Cotlar estimate]
+\label{Cotlar-estimate}
+\leanok
+\lean{cotlar_estimate}
+\uses{Cotlar-control, Cotlar-sets}
+Assume that \eqref{two-sided-Hr-bound-assumption} holds.
+Let $0<r\le R$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure. Then
+\begin{equation}\label{eq-cotlar-estimate}
+|T_Rg(x)| \le 2^{2}M(T_rg)(x)+ 2^{a^3+20a+3} Mg(x)
+\, .
+\end{equation}
+\end{lemma}
+```
+
+:::proof "Cotlar-estimate"
+Proof. By {bpref "Cotlar-sets"}[], the set of all
+$`x'\in B(x,\frac R4)` such that at least one of the two exceptional conditions
+is satisfied has measure less than or equal to $`\mu(B(x,\frac R4))/2`, and
+hence is not all of $`B(x,\frac R4)`. Pick an $`x'\in B(x,\frac R4)` such that
+both conditions are not satisfied. Applying {bpref "Cotlar-control"}[] for
+this $`x'` and using the triangle inequality estimates the left-hand side of
+the Cotlar estimate by
+$$`
+4M(T_rg)(x)+2^{a^3+20a+2}Mg(x)+2^{a^3+4a+1}Mg(x).
+`
+This proves the lemma.
+:::
+
+```tex "Cotlar-estimate" (slot := proof)
+\begin{proof}
+\leanok
+By \Cref{Cotlar-sets}, the set of all $x'\in B(x,\frac {R} 4)$
+such that at least one of the conditions
+\eqref{first-cotlar-exception} and
+\eqref{second-cotlar-exception} is satisfied has measure less than or equal to $\mu(B(x,\frac{R}{4}))/2$ and hence is not all of $B(x,\frac {R} 4)$.
+Pick an $x'\in B(x,\frac {R} 4)$ such that both conditions are not satisfied.
+Applying \Cref{Cotlar-control} for this $x'$ and using the triangle inequality
+estimates the left-hand side of \eqref{eq-cotlar-estimate}
+by
+\begin{equation}
+    4 M(T_rg)(x) + 2^{a^3 + 20a + 2} Mg(x) + 2^{a^3 + 4a + 1} Mg(x)\, .
+\end{equation}
+This proves the lemma.
+\end{proof}
+```
+
 # Proof of The Classical Carleson Theorem
 
 The convergence of partial Fourier sums is proved in
