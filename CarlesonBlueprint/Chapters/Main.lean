@@ -14247,6 +14247,329 @@ Calder\'on-Zygmund decomposition is a tool to extend $L^2$ bounds to $L^p$ bound
 It is classical and can be found in \cite{stein-book}.
 ```
 
+The following lemma is Theorem 3.1(b) in Stein's book. Its proof uses
+{bpref "Hardy-Littlewood"}[].
+
+```tex
+The following lemma is Theorem 3.1(b) in \cite{stein-book}. The proof uses \Cref{Hardy-Littlewood}.
+%fixme: Incorporate this into Hardy-Littlewood?
+```
+
+:::lemma_ "maximal-theorem" (lean := "maximal_theorem") (uses := "Hardy-Littlewood")
+Let $`f:X\to\C` be bounded, measurable, and supported on a set of finite
+measure, and let $`\alpha>0`. Then
+$$`
+\mu(\{x\in X:Mf(x)>\alpha\})
+\le\frac{2^{2a}}{\alpha}\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "maximal-theorem" (slot := statement)
+\begin{lemma}[Maximal theorem]
+    \label{maximal-theorem}
+    \leanok
+    \lean{maximal_theorem}
+    \uses{Hardy-Littlewood}
+    Let $f: X \to \C$ be bounded, measurable, supported on a set of finite measure, and let $\alpha > 0$. Then
+    \begin{equation}
+        \label{maximal-theorem-equation}
+        \mu(\{x\in X : Mf(x) > \alpha\}) \le \frac{2^{2a}}{\alpha} \int |f(y)|\, d\mu(y).
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "maximal-theorem"
+Proof. By definition, for each $`x\in X` with $`Mf(x)>\alpha`, there is a ball
+$`B_x` containing $`x` such that
+$$`
+\alpha\mu(B_x)<\int_{B_x}|f(y)|\,d\mu(y).
+`
+Since $`\{x\in X:Mf(x)>\alpha\}` is open and $`\mu` is inner regular on open
+sets, it suffices to prove
+$$`
+\mu(E)\le\frac{2^{2a}}{\alpha}\int|f(y)|\,d\mu(y)
+`
+for every compact $`E` contained in this set. By compactness, choose a finite
+subcollection $`\mathcal B\subset\{B_x:x\in E\}` covering $`E`. Applying the
+finite ball-union estimate gives
+$$`
+\alpha\mu\left(\bigcup\mathcal B\right)
+\le2^{2a}\int|f(y)|\,d\mu(y).
+`
+Consequently,
+$$`
+\mu(E)\le\mu\left(\bigcup\mathcal B\right)
+\le\frac{2^{2a}}{\alpha}\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "maximal-theorem" (slot := proof)
+\begin{proof}
+    \leanok
+    By definition, for each $x\in X$ with $Mf(x) > \alpha$, there exists a ball $B_x$ such that $x\in B_x$ and
+    \begin{equation}
+        \label{maximal-theorem-a}
+        \alpha \mu(B_x) < \int_{B_x} |f(y)|\, d\mu(y).
+    \end{equation}
+    Since $\{x\in X : Mf(x) > \alpha\}$ is open and $\mu$ is inner regular on open sets, it suffices to show that
+    \begin{equation*}
+        \mu(E) \le \frac{2^{2a}}{\alpha} \int |f(y)|\, d\mu(y)
+    \end{equation*}
+    for every compact $E\subset \{x\in X : Mf(x) > \alpha\}$.
+    For such an $E$, by compactness, we can select a finite subcollection $\mathcal{B} \subset \{B_x: x\in E\}$ that covers $E$.
+    By \eqref{eq-besico} applied to \eqref{maximal-theorem-a},
+    \begin{equation}
+        \alpha \mu(\bigcup \mathcal{B}) \le 2^{2a} \int |f(y)|\,d\mu(y)
+    \end{equation}
+    and hence
+    \begin{equation*}
+        \mu(E) \le \mu(\bigcup \mathcal{B}) \le \frac{2^{2a}}{\alpha} \int |f(y)|\,d\mu(y).
+    \end{equation*}
+\end{proof}
+```
+
+:::lemma_ "Lebesgue-differentiation" (lean := "lebesgue_differentiation")
+Let $`f` be a bounded measurable function supported on a set of finite measure.
+Then, for $`\mu`-almost every $`x`,
+$$`
+\lim_{n\to\infty}\frac1{\mu(B_n)}\int_{B_n}f(y)\,dy=f(x),
+`
+where $`\{B_n\}_{n\ge1}` is a sequence of balls containing $`x`, with radii
+$`r_n>0` satisfying $`\lim_{n\to\infty}r_n=0`.
+:::
+
+```tex "Lebesgue-differentiation" (slot := statement)
+\begin{lemma}[Lebesgue differentiation]
+    \label{Lebesgue-differentiation}
+    \leanok
+    \lean{lebesgue_differentiation}
+    Let $f$ be a bounded measurable function supported on a set of finite measure. Then for $\mu$ almost every $x$, we have
+    $$\lim_{n\to \infty} \frac{1}{\mu(B_n)}\int_{B_n} f(y)\, dy= f(x),$$
+    where $\{B_n\}_{n\geq 1}$ is a sequence of balls with radii $r_n>0$ such that $x\in B_n$ for each $n\geq 1$ and
+    \begin{equation*}
+        \lim_{n\to \infty} r_n=0 \,.
+    \end{equation*}
+\end{lemma}
+```
+
+:::proof "Lebesgue-differentiation"
+Proof. This follows from the Lebesgue differentiation theorem, which is already
+formalized in Lean.
+:::
+
+```tex "Lebesgue-differentiation" (slot := proof)
+\begin{proof}
+    \leanok
+    This follows from the Lebesgue differentiation theorem, which is already formalized in Lean.
+    %fixme: Check that the Lean version really implies this version of Lebesgue differentiation.
+\end{proof}
+```
+
+:::lemma_ "disjoint-family-countable" (lean := "Pairwise.countable_of_isOpen_disjoint")
+In a doubling metric measure space $`(X,\rho,\mu,a)`, every disjoint family of
+balls $`B_j=B(x_j,r_j)`, $`j\in J`, is countable.
+:::
+
+```tex "disjoint-family-countable" (slot := statement)
+% This is in Mathlib.
+\begin{lemma}[Disjoint family countable]
+    \leanok
+    \lean{Pairwise.countable_of_isOpen_disjoint}
+    \label{disjoint-family-countable}
+    In a doubling metric measure space $(X,\rho,\mu, a)$, every disjoint family of balls $B_j = B(x_j, r_j)$, $j\in J$, is countable.
+\end{lemma}
+```
+
+:::proof "disjoint-family-countable"
+Proof. Choose an arbitrary $`x\in X` as reference point. For
+$`q,Q\in\mathbb Q_+`, let $`J_{q,Q}` be the set of all $`j\in J` such that
+$`B_j\subset B(x,Q)` and $`r_j\ge q`. It suffices to prove that all
+$`J_{q,Q}` are finite. Indeed, for every $`j\in J_{q,Q}`,
+$$`
+\mu(B(x,Q))
+\le\mu(B(x_j,2Q))
+=\mu\left(B\left(x_j,\frac{2Q}{r_j}r_j\right)\right)
+\le2^{a\log_2\left\lceil\frac{2Q}{r_j}\right\rceil}\mu(B_j).
+`
+Since the balls $`B_j` are disjoint,
+$$`
+|J_{q,Q}|\mu(B(x,Q))
+\le2^{a\log_2\left\lceil\frac{2Q}{q}\right\rceil}
+\sum_{j\in J_{q,Q}}\mu(B_j)
+\le2^{a\log_2\left\lceil\frac{2Q}{q}\right\rceil}\mu(B(x,Q)),
+`
+and hence $`|J_{q,Q}|\le2^{a\log_2\lceil2Q/q\rceil}`.
+:::
+
+```tex "disjoint-family-countable" (slot := proof)
+\begin{proof}
+    \leanok
+    Choose an arbitrary $x\in X$ as reference point. For $q, Q\in\Q_+$, let $J_{q,Q}$ denote the set of all $j\in J$ such that $B_j\subset B(x, Q)$ and $r_j \ge q$. It suffices to show that all the $J_{q,Q}$ are finite.
+    Indeed, for all $j\in J_{q,Q}$,
+    \begin{equation*}
+        \mu(B(x, Q)) \le \mu(B(x_j, 2Q)) = \mu(B(x_j, \frac{2 Q}{r_j} r_j))
+        \le 2^{a\log_2{\lceil \frac{2 Q}{r_j}\rceil}} \mu(B_j).
+    \end{equation*}
+    Since the $B_j$ are disjoint,
+    \begin{equation}
+        |J_{q,Q}| \mu(B(x, Q)) \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}} \sum_{j\in J_{q,Q}} \mu(B_j) \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}} \mu(B(x,Q))
+    \end{equation}
+    and hence $|J_{q,Q}| \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}}$.
+\end{proof}
+```
+
+The following lemma corresponds to Lemma 3.2 in Stein's book, with the proof
+of the bounded-intersection property taken from the proof of Proposition 7.1.
+Whenever $`B_j=B(x_j,r_j)`, write
+$$`B_{n,j}=B(x_j,nr_j).`
+
+```tex
+The following lemma corresponds to Lemma 3.2 in \cite{stein-book} with additional proof of the bounded intersection property taken from the proof of Proposition 7.1.
+It uses the following notation, which will be used throughout the rest of this section: whenever $B_j$ denotes a ball $B_j = B(x_j, r_j)$, define
+\begin{equation*}
+    B_{n,j} = B(x_j, nr_j).
+\end{equation*}
+```
+
+:::lemma_ "ball-covering" (lean := "ball_covering") (uses := "disjoint-family-countable")
+Given an open set $`O\ne X`, there is a countable family of balls
+$`B_j=B(x_j,r_j)` such that the $`B_j` are pairwise disjoint,
+$$`\bigcup_jB_{3,j}=O,`
+$`B_{7,j}\cap(X\setminus O)\ne\emptyset` for every $`j`, and every $`x\in O`
+belongs to at most $`2^{6a}` of the balls $`B_{3,j}`.
+:::
+
+```tex "ball-covering" (slot := statement)
+\begin{lemma}[Ball covering]
+    \label{ball-covering}
+    \leanok
+    \lean{ball_covering}
+    \uses{disjoint-family-countable}
+    Given an open set $O\ne X$, there exists a countable family of balls $B_j = B(x_j, r_j)$ such that
+    \begin{equation}
+        \label{balls-disjoint}
+        B_j \cap B_{j'} = \emptyset \quad \text{ for } j \ne j',
+    \end{equation}
+    and
+    \begin{equation}
+        \label{balls-covering}
+        \bigcup_j B_{3,j} = O,
+    \end{equation}
+    and
+    \begin{equation}
+        \label{enlarged-balls-intersect-complement}
+        B_{7,j} \cap (X \setminus O) \ne \emptyset \quad \text{ for all } j
+    \end{equation}
+    and we have the bounded intersection property that each $x\in O$ is contained in at most $2^{6a}$ of the $B_{3,j}$.
+\end{lemma}
+```
+
+:::proof "ball-covering"
+Proof. For $`x\in O`, define
+$$`\delta(x):=\sup\{\delta\in\mathbb R:B(x,\delta)\subset O\}.`
+Since $`O` is open and $`O\ne X`, we have $`0<\delta(x)<\infty`. By Zorn's
+lemma, choose a maximal disjoint subfamily of
+$`\{B(x,\delta(x)/6):x\in O\}`. By
+{bpref "disjoint-family-countable"}[], this gives a countable family
+$`B_j=B(x_j,\delta(x_j)/6)`, $`j\in J`. Pairwise disjointness,
+$`B_{7,j}\cap(X\setminus O)\ne\emptyset`, and
+$`\bigcup_jB_{3,j}\subset O` are immediate.
+
+For the reverse inclusion, if
+$`B(x,\delta(x)/6)\cap B(y,\delta(y)/6)\ne\emptyset`, then
+$$`
+\delta(x)\le\rho(x,y)+\delta(y)
+\le\frac{\delta(x)}6+\frac{7\delta(y)}6,
+`
+so $`\delta(x)\le2\delta(y)`. Given $`z\in O`, maximality yields some
+$`j\in J` with $`B(z,\delta(z)/6)\cap B_j\ne\emptyset`. Hence
+$$`
+\rho(z,x_j)<\frac{\delta(z)}6+\frac{\delta(x_j)}6
+\le\frac{3\delta(x_j)}6=3r_j,
+`
+so $`z\in B_{3,j}`.
+
+For bounded intersection, suppose
+$`z\in\bigcap_{k=1}^NB_{3,j_k}`. For $`1\le k\le N`, we have
+$$`
+\delta(z)\le\rho(z,x_{j_k})+\delta(x_{j_k})
+\le\frac{3\delta(x_{j_k})}{2}
+`
+and
+$$`
+\delta(x_{j_k})\le\rho(x_{j_k},z)+\delta(z)
+\le\frac{\delta(x_{j_k})}{2}+\delta(z),
+`
+so $`\delta(x_{j_k})\le2\delta(z)`. Thus
+$`B(z,\delta(z)/6)\subset B(x_{j_k},5r_{j_k})` and
+$`B_{j_k}\subset B(z,8\delta(z)/6)`. Using pairwise disjointness,
+$$`
+\begin{aligned}
+N\mu(B(z,\tfrac{\delta(z)}6))
+&\le\sum_{k=1}^N\mu(B(x_{j_k},5r_{j_k}))\\
+&\le2^{3a}\sum_{k=1}^N\mu(B_{j_k})\\
+&\le2^{3a}\mu(B(z,\tfrac{8\delta(z)}6))\\
+&\le2^{6a}\mu(B(z,\tfrac{\delta(z)}6)).
+\end{aligned}
+`
+Therefore $`N\le2^{6a}`.
+:::
+
+```tex "ball-covering" (slot := proof)
+\begin{proof}
+\leanok
+Define for $x\in O$,
+\begin{equation}
+    \delta(x):= \sup \{\delta\in\R : B(x,\delta)\subset O\}.
+\end{equation}
+Since $O$ is open, and $O\ne X$, we have
+\begin{equation}
+    0 < \delta(x) < \infty \,.
+\end{equation}
+Using Zorn's Lemma, we select a maximal disjoint subfamily of $\{B(x,\frac{\delta(x)}{6}) : x \in O\}$.
+We obtain a (by \Cref{disjoint-family-countable} countable) family of balls $B_j = B(x_j, \frac{\delta(x_j)}{6}), j \in J$ such that \eqref{balls-disjoint}, \eqref{enlarged-balls-intersect-complement}, and $\bigcup_j B_{3,j} \subset O$ are also immediate. For the other inclusion, first observe that for $x,y\in X$,  if $B(x,\frac{\delta(x)}{6}) \cap B(y,\frac{\delta(y)}{6}) \ne \emptyset$, then
+\begin{equation*}
+    \delta(x) \le \rho(x,y) + \delta(y) \le (\frac{\delta(x)}{6} + \frac{\delta(y)}{6}) + \delta(y) = \frac{\delta(x)}{6} + \frac{7\delta(y)}{6},
+\end{equation*}
+so
+\begin{equation}
+    \label{control-distance-growth}
+    \delta(x) \le 2 \delta(y).
+\end{equation}
+Now let $z\in O$. By maximality, there exists some $j\in J$ with $B(z,\frac{\delta(z)}{6}) \cap B_j \ne \emptyset$. By \eqref{control-distance-growth},
+\begin{equation*}
+    \rho(z,x_j)< \frac{\delta(z)}{6} + \frac{\delta(x_j)}{6} \le \frac{3\delta(x_j)}{6} = 3r_j
+\end{equation*}
+and thus $z\in B_{3,j}$.
+
+We now turn to the bounded intersection property. Assume that for some $j_1,\dots,j_N$,
+\begin{equation}
+    z\in \bigcap_{k=1}^N B_{3,j_k}.
+\end{equation}
+Similarly as above, observe for $1\le k \le N$,
+\begin{equation}
+    \label{control-distance-growth-b}
+    \delta(z) \le \rho(z,x_{j_k}) + \delta(x_{j_k}) \le \frac{\delta(x_{j_k})}{2} + \delta(x_{j_k}) = \frac{3\delta(x_{j_k})}{2}
+\end{equation}
+and
+\begin{equation*}
+    \delta(x_{j_k}) \le \rho(x_{j_k},z) + \delta(z) \le \frac{\delta(x_{j_k})}{2} + \delta(z),
+\end{equation*}
+so
+\begin{equation}
+    \label{control-distance-growth-c}
+    \delta(x_{j_k}) \le 2 \delta(z).
+\end{equation}
+
+By \eqref{control-distance-growth-b} and \eqref{control-distance-growth-c}, for all $1\le k \le N$, $B(z,\frac{\delta(z)}{6}) \subset B(x_{j_k}, 5r_{j_k})$ and $B_{j_k} \subset B(z,\frac{8\delta(z)}{6})$. Using this and \eqref{balls-disjoint}, we obtain
+\begin{align}
+    N \mu(B(z,\frac{\delta(z)}{6})) &\le \sum_{k=1}^N \mu(B(x_{j_k}, 5r_j)) \le 2^{3a} \sum_{k=1}^N \mu(B_{j_k}) \\
+    &= 2^{3a} \mu(\bigcup_{k=1}^N B_{j_k}) \le 2^{3a} \mu(B(z,\frac{8\delta(z)}{6})) \le 2^{6a} \mu(B(z,\frac{\delta(z)}{6}))
+\end{align}
+and conclude $N\le 2^{6a}$.
+\end{proof}
+```
+
 # Proof of The Classical Carleson Theorem
 
 The convergence of partial Fourier sums is proved in
