@@ -12,6 +12,11 @@ default_chapters = [
 [lt.source_files]
 "CarlesonBlueprint/Chapters/Main.lean" = ["Carleson/blueprint/src/chapter/main.tex"]
 
+[lt.lean_target_aliases]
+"small_boundary" = "_root_.small_boundary"
+"control_approximation_effect" = "control_approximation_effect'"
+"exceptional_set_carleson" = "exceptional_set_carleson'"
+
 [lt.node_kinds]
 theorem = "theorem"
 definition = "definition"

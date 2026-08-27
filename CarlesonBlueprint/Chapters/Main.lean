@@ -2042,6 +2042,7 @@ from Lemma {bpref "R-truncation"}[].
 ```tex "linearised-metric-Carleson" (slot := proof)
 \begin{proof}[Proof of \Cref{linearised-metric-Carleson}]
 \leanok
+\proves{linearised-metric-Carleson}
 Let Borel sets $F$, $G$ in $X$ with finite measure be given. Let a Borel function $f: X \to \mathbb{C}$ with $f \le \mathbf{1}_F$ be given.
 
 For each $0 < R_1,R_2,R$, we define $T_{R_1,R_2,R}f$ as in \eqref{TRR}.
@@ -3021,7 +3022,7 @@ $$`\sum_{z\in Y_{k-K}: (z,k-K|y,k)}\mu(I_3(z,k-K)) \le \frac 12 \mu(I_3(y,k)).`
     \label{small-boundary}
     \uses{transitive-boundary}
     \leanok
-    \lean{_root_.small_boundary}
+    \lean{small_boundary}
     Let $K = 2^{4a+1}$. For each $-S+K\le k\le S$ and $y\in Y_k$ we have
       \begin{equation}
             \label{new-small-boundary}
@@ -3641,13 +3642,14 @@ $`\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.2)`, then since
 $`B_{\fp}(\mathcal{Q}(\fp), 0.2)\subset B_{\fp}(\mathcal{Q}(\fp), 1)`, we
 conclude that $`\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.7)`. If not, by
 `eq-it-omega`, there exists $`z \in \mathcal{Z}(J) \cap \Omega_1(\fp)` with
-$`\mfa \in \Omega(J,z)`. Using the triangle inequality,
-{bpref "monotone-cube-metrics"}[] and `eq-freq-comp-ball`, we obtain
-$$`d_{\fp'}(\fcc(\fp'),z) \le d_{\fp'}(\fcc(\fp'), \mfa) + d_{\fp'}(z, \mfa) \le 0.2 + 2^{-95a} \cdot 1 < 0.3.`
-Thus $`z \in \Omega_1(\fp')` by `eq-omega1-incl`. By
-{bpref "disjoint-frequency-cubes"}[], it follows that $`\fp = \fp'`. This shows the
-second inclusion in `eq-freq-comp-ball`. The first inclusion is immediate from
-`eq-it-omega`.
+$`\mfa \in \Omega(J,z)`. Using the triangle inequality and
+`eq-omega1-incl`, we obtain
+$$`d_{I^\circ}(\fcc(\fp),\mfa) \le d_{I^\circ}(\fcc(\fp), z) + d_{I^\circ}(z, \mfa) \le 0.7 + d_{I^\circ}(z, \mfa).`
+By {bpref "monotone-cube-metrics"}[] and the induction hypothesis, this is
+estimated by
+$$`\le 0.7 + 2^{-95a} d_{J^\circ}(z,\mfa) \le 0.7 + 2^{-95a}\cdot 1 < 1.`
+This shows the second inclusion in `eq-freq-comp-ball`. The first inclusion is
+immediate from `eq-it-omega`.
 Next, we show `eq-dis-freq-cover`. Let $`I \in \mathcal{D}`. If
 $`I = I_0`, then disjointedness of the sets $`\fc(\fp)` for
 $`\fp \in \fP(I)` follows from the definition `eq-max-omega` and
@@ -3716,11 +3718,15 @@ the proof.
     \begin{equation*}
         B_{\fp}(\mathcal{Q}(\fp), 0.2)\subset B_{\fp}(\mathcal{Q}(\fp), 1)\, ,
     \end{equation*}
-    we conclude that $\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.7)$. If not, by \eqref{eq-it-omega}, there exists $z \in \mathcal{Z}(J) \cap \Omega_1(\fp)$ with $\mfa \in \Omega(J,z)$. Using the triangle inequality and \Cref{monotone-cube-metrics} and \eqref{eq-freq-comp-ball}, we obtain
+    we conclude that $\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.7)$. If not, by \eqref{eq-it-omega}, there exists $z \in \mathcal{Z}(J) \cap \Omega_1(\fp)$ with $\mfa \in \Omega(J,z)$. Using the triangle inequality and \eqref{eq-omega1-incl}, we obtain
     $$
-        d_{\fp'}(\fcc(\fp'),z) \le d_{\fp'}(\fcc(\fp'), \mfa) + d_{\fp'}(z, \mfa) \le 0.2 + 2^{-95a} \cdot 1 < 0.3\,.
+        d_{I^\circ}(\fcc(\fp),\mfa) \le d_{I^\circ}(\fcc(\fp), z) + d_{I^\circ}(z, \mfa) \le 0.7 + d_{I^\circ}(z, \mfa)\,.
     $$
-    Thus $z \in \Omega_1(\fp')$ by \eqref{eq-omega1-incl}. By \Cref{disjoint-frequency-cubes}, it follows that $\fp = \fp'$. This shows the second inclusion in \eqref{eq-freq-comp-ball}. The first inclusion is immediate from \eqref{eq-it-omega}.
+    By \Cref{monotone-cube-metrics} and the induction hypothesis, this is estimated by
+    $$
+        \le 0.7 + 2^{-95a} d_{J^\circ}(z,\mfa) \le 0.7 + 2^{-95a}\cdot 1 < 1\,.
+    $$
+    This shows the second inclusion in \eqref{eq-freq-comp-ball}. The first inclusion is immediate from \eqref{eq-it-omega}.
 
     Next, we show \eqref{eq-dis-freq-cover}. Let $I \in \mathcal{D}$.
 
@@ -6253,7 +6259,7 @@ definitions of the collections $`\fC_i` and $`\fL_i`.
     \leanok
     Let $\fp \in \fP_2 \cap \fP_{G \setminus G'}$. Clearly, for every cube $J = \scI(\fp)$ with $\fp \in \fP_{G \setminus G'}$ there exists some $k \ge 0$ such that \eqref{muhj1} holds, and for no cube $J \in \mathcal{D}$ and no $k < 0$ does \eqref{muhj2} hold. Thus $\fp \in \fP(k)$ for some $k \ge 0$.
 
-    Next, since $E_2(\lambda, \fp') \subset \scI(\fp')\cap G$ for every $\lambda \ge 2$ and every tile $\fp' \in \fP(k)$ with $\lambda\fp \lesssim \lambda\fp'$, it follows from \eqref{muhj2} that $\mu(E_2(\lambda, \fp')) \le 2^{-k} \mu(\scI(\fp'))$ for every such $\fp'$, so $\dens_k'(\{\fp\}) \le 2^{-k}$. Combining this with $a \ge 0$, it follows from \eqref{def-cnk} that there exists $n\ge k$ with $\fp \in \fC(k,n)$.
+    Next, since $E_2(\lambda, \fp') \subset \scI(\fp')\cap G$ for every $\lambda \ge 2$ and every tile $\fp' \in \fP(k)$ with $\lambda\fp \lesssim \lambda \fp'$, it follows from \eqref{muhj2} that $\mu(E_2(\lambda, \fp')) \le 2^{-k} \mu(\scI(\fp'))$ for every such $\fp'$, so $\dens_k'(\{\fp\}) \le 2^{-k}$. Combining this with $a \ge 0$, it follows from \eqref{def-cnk} that there exists $n\ge k$ with $\fp \in \fC(k,n)$.
 
     Since $\fp \in \fP_{G \setminus G'}$, we have in particular $\scI(\fp) \not \subset A(2n + 6, k, n)$, so there exist at most $1 + (4n + 12)2^n < 2^{2n+4}$ tiles $\mathfrak{m} \in \mathfrak{M}(k,n)$ with $\fp \le \mathfrak{m}$. It follows that $\fp \in \fL_0(k,n)$ or $\fp \in \fC_1(k,n,j)$ for some $1 \le j \le 2n + 3$. In the former case we are done, in the latter case the equality to be shown follows from the definitions of the collections $\fC_i$ and $\fL_i$.
 \end{proof}
@@ -6523,7 +6529,7 @@ tag := "antichainboundary"
 
 Let an antichain $`\mathfrak{A}` and functions $`f`, $`g` as in
 {bpref "antichain-operator"}[] be given. We prove `eq-antiprop` in
-{bpref "sec-TTstar-TstarT"}[The density arguments] as the
+{bpref "sec-TT*-T*T"}[The density arguments] as the
 geometric mean of two inequalities, each involving one of the two densities.
 One of these two inequalities will need a careful estimate formulated in
 {bpref "tile-correlation"}[] of the $`TT^*` correlation between two tile operators.
@@ -6531,7 +6537,7 @@ One of these two inequalities will need a careful estimate formulated in
 {ref "sec-tile-operator"}[Proof of the Tile Correlation Lemma].
 
 ```tex
-% witness-label: main.antichain.1
+
 \section{Proof of the Antichain Operator Proposition}
 
 \label{antichainboundary}
@@ -6539,7 +6545,7 @@ One of these two inequalities will need a careful estimate formulated in
 Let an antichain $\mathfrak{A}$
 and functions $f$, $g$ as in \Cref{antichain-operator} be given.
 We prove \eqref{eq-antiprop}
-in \Cref{sec-TTstar-TstarT}
+in \Cref{sec-TT*-T*T}
 as the geometric mean of two inequalities,
 each involving one of the two densities.
 One of these two inequalities will need a careful estimate formulated in
@@ -6564,15 +6570,15 @@ geometric \Cref{antichain-tile-count} counting the relevant tile pairs.
 
 ## The density arguments
 %%%
-tag := "sec-TTstar-TstarT"
+tag := "sec-TT*-T*T"
 %%%
 
 We begin with the following crucial disjointedness property of the sets
 $`E(\fp)` with $`\fp \in \mathfrak{A}`.
 
 ```tex
-% witness-label: main.antichain.3
-\subsection{The density arguments}\label{sec-TTstar-TstarT}
+
+\subsection{The density arguments}\label{sec-TT*-T*T}
 
 We begin with the following crucial disjointedness property of the sets $E(\fp)$ with $\fp \in \mathfrak{A}$.
 ```
@@ -7545,11 +7551,11 @@ By Fubini and the triangle inequality and
 the fact $|e(\tQ(x_i)(x_i))|=1$ for $i=1,2$, we can estimate
 \eqref{tstartstar} and \eqref{tstartstar'} from above by
 \begin{equation}\label{eqa1}
-    \int_{E(\fp')} \int_{E(\fp)} \mathbf{I}(x_1, x_2)\, d\mu(x_1)d\mu(x_2)\,.
+    \int_{E(\fp')} \int_{E(\fp)} {\bf I}(x_1, x_2)\, d\mu(x_1)d\mu(x_2)\,.
 \end{equation}
 with
 \begin{equation}
-    \mathbf{I}(x_1, x_2):=
+    {\bf I}(x_1, x_2):=
     \left|\int
     e(-\tQ(x_1)(y)+\tQ(x_2)(y))\varphi_{x_1,x_2}(y)
     d\mu(y) \, g(x_1)g(x_2)\right|
@@ -7562,7 +7568,7 @@ $\varphi:=\varphi_{x_1,x_2}$ satisfies the assumptions of
 \Cref{Holder-van-der-Corput} with $z = x_1$ and $R = D^{s_1}$ by \Cref{correlation-kernel-bound}.
 We obtain with $B':= B(x_1, D^{\ps(\fp')})$,
 \begin{equation*}
- \mathbf{I}(x_1, x_2) \le 2^{8a} \mu(B') \|{\varphi}\|_{C^\tau(B')}
+ {\bf I}(x_1, x_2) \le 2^{8a} \mu(B') \|{\varphi}\|_{C^\tau(B')}
        (1 + d_{B'}(\tQ(x_1),\tQ(x_2)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|
 \end{equation*}
 \begin{equation}
@@ -9812,7 +9818,7 @@ $`r=104 D^{s(J') + 1}`.
     We prove the inequality with the constant $2^{201a^3}$ replaced by $2 ^ {200a^3 + 14a}$; this
     is stronger because $a \geq 4$. It suffices to show the existence of a tile $\fp \in \fT(\fu)$
     and an $r \geq 4 D ^ {\ps(\fp)}$ such that $J \subset B(\pc(\fp), r)$ and
-    $\mu(B(\pc(\fp), r)) \le 2 ^ {200a^3 + 14a} \mu(J)$, because then it follows from the definition
+    $\mu(B(\pc(\fp), r)) ≤ 2 ^ {200a^3 + 14a} \mu(J)$, because then it follows from the definition
     \eqref{definedens2} of $\dens_2$ that
     $$
         \mu(F \cap J) \le \mu(F \cap B(\pc(\fp), r))
@@ -10337,11 +10343,11 @@ $$`B(J) := B(c(J), 8D^{s(J)}).`
 The main result of this subsubsection is the following.
 
 ```tex
-% witness-label: main.forestop.large.3
+
     For cubes $J \in \mathcal{D}$, denote
     \begin{equation}
         \label{def-BJ}
-        B(J) := B(c(J), 8D^{s(J)})\,.
+        B(J) := B(c(J), 8D^{s(J)}).
     \end{equation}
     The main result of this subsubsection is the following.
 ```
@@ -11055,7 +11061,7 @@ $$`\le 2^{128a^3+4a+1} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \inf_J M_{
         Let $\fC_1 = \fT(\fu_1)$ and $\fC_2 = \fT(\fu_2) \cap \mathfrak{S}$. Then for $i = 1,2$ and each $J \in \mathcal{J}'$ and all bounded $g$ with bounded support, we have
         \begin{align}
             \label{TreeUB}
-            \sup_{B'(J)} |T_{\fC_i}^*g| \leq \inf_{B^\circ{}(J)} |T^*_{\fC_i} g| + 2^{128a^3+4a+3} \inf_{J} M_{\mathcal{B},1} |g|\,.
+            \sup_{B'(J)} |T_{\fC_i}^*g| \leq \inf_{B^\circ{}(J)} |T^*_{\fC_i} g| + 2^{128a^3+4a+3} \inf_{J} M_{\mathcal{B}, 1} |g|
         \end{align}
         and for all $y,y' \in B'(J)$
         $$
@@ -11366,7 +11372,7 @@ follows.
     \begin{multline}
         \label{eq-big-sep-1}
         \le 2^{485a^3+7a+3a^3+3a} 2^{-Zn/(4a^2 + 2a^3)} \sum_{J \in \mathcal{J}'} \mu(B(J)) \\
-        \times \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J M_{\mathcal{B}, 1} g_j)\,.
+        \times \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J M_{\mathcal{B},1} g_j)\,.
     \end{multline}
     By the doubling property \eqref{doublingx}
     $$
@@ -11374,7 +11380,7 @@ follows.
     $$
     thus
     $$
-        \mu(B(J)) \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J M_{\mathcal{B}, 1} g_j)
+        \mu(B(J)) \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J M_{\mathcal{B},1} g_j)
     $$
     $$
         \le 2^{6a} \int_{B^\circ{}(J)} \prod_{j=1}^2 ( |T_{\fT(\fu_j)}^* g_j|(x) + M_{\mathcal{B},1} g_j(x)) \, \mathrm{d}\mu(x)
@@ -13374,7 +13380,7 @@ $$`\sup_{N\ge 0} |S_N f(x)-S_N f_0(x)| \le \frac \epsilon 4.`
 \label{control-approximation-effect}
 \uses{partial-Fourier-sums-of-small}
 \leanok
-\lean{control_approximation_effect'}
+\lean{control_approximation_effect}
     There is a set $E \subset \R$ with Lebesgue measure
     $|E|\le \epsilon$ such that for all
     \begin{equation}
@@ -13409,7 +13415,7 @@ $$`|f(x)-S_N f(x)|\le \epsilon.`
 \begin{theorem}[classical Carleson with exceptional sets]
     \label{exceptional-set-carleson}
     \leanok
-    \lean{exceptional_set_carleson'}
+    \lean{exceptional_set_carleson}
     \uses{smooth-approximation, convergence-for-smooth,
     control-approximation-effect}
     Let $f$ be a $2\pi$-periodic complex-valued continuous function on $\mathbb{R}$. For all $\epsilon>0$, there exists a Borel set $E\subset [0,2\pi]$ with Lebesgue measure $|E|\le \epsilon$ and a positive integer $N_0$ such that for all $x\in [0,2\pi]\setminus E$ and all integers $N>N_0$, we have
@@ -15085,7 +15091,7 @@ $$`C_\epsilon =
     \label{partial-Fourier-sums-of-small}
     \uses{real-Carleson-operator-measurable,real-Carleson,partial-Fourier-sum-bound}
     \leanok
-    \lean{control_approximation_effect'} % todo: fix. This seems currently inlined in control_approximation_effect' ?
+    \lean{control_approximation_effect} % todo: fix. This seems currently inlined in control_approximation_effect ?
     %fixme: rename \delta to \epsilon' ?
     Let $g:\R\to\C$ be a measurable $2\pi$-periodic function such that for some $\delta>0$ and every $x\in\R$,
     \begin{equation} \label{g-small}
