@@ -14570,6 +14570,814 @@ and conclude $N\le 2^{6a}$.
 \end{proof}
 ```
 
+Most of the next lemma and its proof is taken from Theorem 4.2 in Stein's
+book.
+
+```tex
+Most of the next lemma and its proof is taken from Theorem 4.2 in \cite{stein-book}.
+```
+
+:::lemma_ "Calderon-Zygmund-decomposition" (lean := "encard_czBall3_le, tsum_czRemainder', aemeasurable_czApproximation, czApproximation_add_czRemainder, enorm_czApproximation_le, enorm_czApproximation_le_infinite, eLpNorm_czApproximation_le, support_czRemainder'_subset, integral_czRemainder', integral_czRemainder, eLpNorm_czRemainder'_le, eLpNorm_czRemainder_le, tsum_volume_czBall3_le, volume_univ_le, tsum_eLpNorm_czRemainder'_le, tsum_eLpNorm_czRemainder_le") (uses := "ball-covering,Lebesgue-differentiation,maximal-theorem")
+Let $`f` be a bounded, almost-everywhere measurable function supported on a
+set of finite measure, and let
+$`\alpha>\mu(X)^{-1}\int |f|\,d\mu`. Then there exist a bounded,
+almost-everywhere measurable function $`g` supported on a set of finite
+measure, a countable family of balls $`B_{3,j}` (allowing $`B_{3,1}=X` in the
+special case $`\mu(X)<\infty`) such that each $`x\in X` belongs to at most
+$`2^{6a}` of them, and a countable family of almost-everywhere measurable
+functions $`\{b_j\}_{j\in J}` such that
+$$`
+f(x)=g(x)+\sum_j b_j(x)
+`
+for every $`x\in X`, and the following properties hold:
+
+* $`|g(x)|\le 2^{3a}\alpha` for almost every $`x\in X`;
+* $`\int |g(y)|\,d\mu(y)\le\int |f(y)|\,d\mu(y)`;
+* $`\operatorname{supp}b_j\subset B_{3,j}` and
+  $`\int_{B_{3,j}}b_j(x)\,d\mu(x)=0` for every $`j`;
+* $`\int_{B_{3,j}}|b_j(x)|\,d\mu(x)
+  \le 2^{2a+1}\alpha\mu(B_{3,j})` for every $`j`;
+* $`\sum_j\mu(B_{3,j})\le
+  \frac{2^{4a}}{\alpha}\int|f(y)|\,d\mu(y)`; and
+* $`\sum_j\int_{B_{3,j}}|b_j(y)|\,d\mu(y)
+  \le2\int|f(y)|\,d\mu(y)`.
+:::
+
+```tex "Calderon-Zygmund-decomposition" (slot := statement)
+\begin{lemma}[Calderon Zygmund decomposition]
+    \label{Calderon-Zygmund-decomposition}
+    \leanok
+    \lean{encard_czBall3_le, tsum_czRemainder', aemeasurable_czApproximation, czApproximation_add_czRemainder, enorm_czApproximation_le, enorm_czApproximation_le_infinite, eLpNorm_czApproximation_le, support_czRemainder'_subset, integral_czRemainder', integral_czRemainder, eLpNorm_czRemainder'_le, eLpNorm_czRemainder_le, tsum_volume_czBall3_le, volume_univ_le, tsum_eLpNorm_czRemainder'_le, tsum_eLpNorm_czRemainder_le}
+    \uses{ball-covering,Lebesgue-differentiation,maximal-theorem}
+    Let $f$ be a bounded, a.e. measurable function supported on a set of finite measure and let $\alpha>\frac{1}{\mu(X)}\int |f|\,d\mu$.
+    Then there exists a bounded a.e. measurable function $g$ supported on a set of finite measure, a countable family of balls $B_{3,j}$ (where we allow $B_{3,1} = X$ in the special case that $\mu(X)<\infty$)
+    % Do we actually need this parenthetical?
+    such that each $x\in X$ is contained in at most $2^{6a}$ of the $B_{3,j}$, and a countable family of a.e. measurable functions $\{b_j\}_{j\in J}$ such that for all $x \in X$
+    \begin{equation}
+       \label{eq-gb-dec}
+       f(x)= g(x) + \sum_{j} b_j(x)
+    \end{equation}
+    and such that the following holds. For almost every $x\in X$,
+    \begin{equation}
+        \label{eq-g-max}
+       |g(x)|\leq 2^{3a} \alpha\,.
+    \end{equation}
+    We have
+    \begin{equation}
+        \label{eq-g-L1-norm}
+        \int |g(y)|\, d\mu(y)\leq \int |f(y)|\, d\mu(y).
+    \end{equation}
+    For every $j$
+    \begin{equation}
+        \label{eq-supp-bj}
+        \operatorname{supp} b_j \subset B_{3,j}\,.
+    \end{equation}
+    For every $j$
+    \begin{equation}
+        \label{eq-bad-mean-zero}
+        \int_{B_{3,j}} b_j(x)\, d\mu(x)=0,
+    \end{equation}
+    and
+     \begin{equation}
+        \label{eq-bj-L1}
+        \int_{B_{3,j}} |b_j(x)|\, d\mu(x) \leq 2^{2a+1} \alpha \mu(B_{3,j}).
+    \end{equation}
+    We have
+    \begin{equation}
+        \label{eq-bset-length-sum}
+        \sum_j \mu(B_{3,j})\leq \frac{2^{4a}}{\alpha}\int |f(y)|\, d\mu(y)
+    \end{equation}
+    and
+    \begin{equation}
+    \label{eq-b-L1}
+    \sum_{j}\int_{B_{3,j}} |b_j(y)|\, d\mu(y)\leq 2 \int |f(y)|\, d\mu(y)\,.
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "Calderon-Zygmund-decomposition"
+Proof. Put $`E_\alpha:=\{x\in X:Mf(x)>\alpha\}`. This set is open. First
+suppose $`E_\alpha\ne X`. Apply {bpref "ball-covering"}[] to
+$`O=E_\alpha`, obtaining balls $`B_j`, $`j\in J`, and identify $`J` with
+$`\mathbb N`. Define inductively
+$$`
+Q_j:=B_{3,j}\setminus\left(\bigcup_{i<j}Q_i\cup\bigcup_{i>j}B_i\right).
+`
+Then $`B_j\subset Q_j\subset B_{3,j}`, the $`Q_j` are pairwise disjoint,
+and $`\bigcup_jQ_j=E_\alpha`. Define
+$$`
+g(x):=\begin{cases}
+f(x),&x\in X\setminus E_\alpha,\\
+\displaystyle\frac1{\mu(Q_j)}\int_{Q_j}f(y)\,d\mu(y),&x\in Q_j,
+\end{cases}
+`
+and
+$$`
+b_j(x):=\mathbf 1_{Q_j}(x)\left(f(x)-
+\frac1{\mu(Q_j)}\int_{Q_j}f(y)\,d\mu(y)\right).
+`
+The decomposition, support, and mean-zero properties follow immediately.
+The function $`g` is bounded and its support is contained in
+$`\operatorname{supp}f\cup\bigcup_jQ_j`; the maximal theorem therefore shows
+that this support has finite measure.
+
+If $`x\notin E_\alpha`, every ball $`B` containing $`x` satisfies
+$$`
+\frac1{\mu(B)}\int_B|f(y)|\,d\mu(y)\le\alpha.
+`
+{bpref "Lebesgue-differentiation"}[] gives $`|f(x)|\le\alpha` for almost
+every such $`x`. If $`x\in E_\alpha`, then $`x\in Q_j` for some $`j`, while
+$$`
+\frac1{\mu(B_{7,j})}\int_{B_{7,j}}|f(y)|\,d\mu(y)\le\alpha
+`
+because $`B_{7,j}` meets $`X\setminus E_\alpha`. Hence
+$$`
+|g(x)|\le\frac1{\mu(Q_j)}\int_{Q_j}|f(y)|\,d\mu(y)
+\le\frac1{\mu(B_j)}\int_{B_{7,j}}|f(y)|\,d\mu(y)
+\le2^{3a}\alpha.
+`
+
+For the $`L^1` estimate on $`g`, pairwise disjointness gives
+$$`
+\begin{aligned}
+\int|g(z)|\,d\mu(z)
+&\le\int_{X\setminus E_\alpha}|f(z)|\,d\mu(z)
++\sum_j\int_{Q_j}\frac1{\mu(Q_j)}
+  \int_{Q_j}|f(y)|\,d\mu(y)\,d\mu(z)\\
+&=\int|f(z)|\,d\mu(z).
+\end{aligned}
+`
+The triangle inequality also yields
+$$`
+\int_{B_{3,j}}|b_j(y)|\,d\mu(y)
+\le2\int_{Q_j}|f(y)|\,d\mu(y).
+`
+Using the estimate on $`B_{7,j}`, the right side is at most
+$`2^{2a+1}\alpha\mu(B_{3,j})`. Summing the preceding inequality over $`j`
+proves the total $`L^1` bound for the bad parts. Finally, the maximal theorem
+gives
+$$`
+\sum_j\mu(B_{3,j})
+\le2^{2a}\sum_j\mu(B_j)
+\le2^{2a}\mu(E_\alpha)
+\le\frac{2^{4a}}\alpha\int|f(y)|\,d\mu(y).
+`
+
+It remains to consider $`E_\alpha=X`. {bpref "maximal-theorem"}[] implies
+$`\mu(X)<\infty`. Set
+$$`
+g:=\frac1{\mu(X)}\int|f(y)|\,d\mu(y),\qquad b_1:=f-g,
+`
+and take $`B_{3,1}=X`. All decomposition, support, mean-zero, and $`L^1`
+properties are immediate. The hypothesis gives $`g<\alpha`, and
+$$`
+\int|b_1(y)|\,d\mu(y)
+\le2\int|f(y)|\,d\mu(y)\le2\alpha\mu(X),
+`
+which proves both bad-part estimates. The maximal theorem also gives
+$$`
+\mu(X)\le\frac{2^{2a}}\alpha\int|f(y)|\,d\mu(y),
+`
+and finishes the proof.
+:::
+
+```tex "Calderon-Zygmund-decomposition" (slot := proof)
+\begin{proof}
+\leanok
+Let $E_\alpha:=\{x\in X: Mf(x)>\alpha\}$.
+Then $E_\alpha$ is open. Assume first that $E_\alpha \ne X$. We apply \Cref{ball-covering} with $O=E_\alpha$ to obtain the family $B_j, j\in J,$. Without loss of generality, we can assume $J=\N$. Define inductively
+\begin{equation}
+    Q_j := B_{3,j} \setminus \left(\bigcup_{i<j} Q_i \cup \bigcup_{i>j} B_i \right).
+\end{equation}
+Then $B_j\subset Q_j\subset B_{3,j}$, the $Q_j$ are pairwise disjoint and $\bigcup_j Q_j = E_\alpha$.
+Define
+\begin{equation}
+    \label{eq-g-def}
+    g(x):=\begin{cases}
+     f(x), & x\in X\setminus E_\alpha,\\
+     \frac{1}{\mu(Q_j)}\int_{Q_j} f(y)\, d\mu(y), &x\in Q_j,
+    \end{cases}
+\end{equation}
+and, for each $j$,
+\begin{equation}
+    b_j(x):= \mathbf{1}_{Q_j}(x) \left(f(x)-\frac{1}{\mu(Q_j)}\int_{Q_j} f(y)\, d\mu(y) \right).
+\end{equation}
+Then \eqref{eq-gb-dec}, \eqref{eq-supp-bj} and \eqref{eq-bad-mean-zero} are true by construction.
+Boundedness of $g$ is immediate from the definition, as is the fact that $\supp g$ is contained within
+$\supp f \cup \bigcup_j Q_j$. Now the fact that $\supp g$ has finite measure follows from
+$\bigcup_j Q_j = E_\alpha$ and \eqref{eq-hlm-2}.
+
+For \eqref{eq-g-max}, we first do the case $x\in X\setminus E_\alpha$. By definition of $Mf$,
+\begin{equation}
+    \frac{1}{\mu(B)}\int_B |f(y)|\,d\mu(y) \le \alpha
+\end{equation}
+for every ball $B\subset X$ with $x\in B$. It follows by \Cref{Lebesgue-differentiation} that for almost every $x\in X\setminus E_\alpha$, $|f(x)|\le \alpha$.
+In the case $x\in E_\alpha$, there exists some $j\in J$ with $x\in Q_j$ and we have that
+\begin{equation}
+    \label{large-ball-estimate}
+    \frac{1}{\mu(B_{7,j})} \int_{B_{7,j}} |f(y)| \,d\mu(y) \le \alpha
+\end{equation}
+because $B_{7,j}\cap (X\setminus E_\alpha) \ne \emptyset$. We get
+\begin{equation}
+    |g(x)| \le \frac{1}{\mu(Q_j)}\int_{Q_j} |f(y)|\, d\mu(y) \le \frac{1}{\mu(B_j)}\int_{B_{7,j}} |f(y)| \, d\mu(y) \le 2^{3a}\alpha .
+\end{equation}
+
+To prove \eqref{eq-g-L1-norm}, we estimate
+\begin{align*}
+    \int |g(z)|\, d\mu(z) &\le \int_{X\setminus E_\alpha} |f(z)|\, d\mu(z) + \sum_{j} \int_{Q_j}\frac{1}{\mu(Q_j)}\int_{Q_j}|f(y)|\, d\mu(y)\,d\mu(z) \\
+    &= \int |f(z)|\,d\mu(z).
+\end{align*}
+Using the triangle inequality, we have that
+\begin{align}
+    \label{eq-bj-int}
+    \int_{B_{3,j}} |b_j(y)|\, dy &\le \int_{Q_j} |f(y)|\, d\mu(y) + \int_{Q_j} \frac{1}{\mu(Q_j)}\int_{Q_j} |f(x)|\, d\mu(x)\, d\mu(y) \\
+    &= 2 \int_{Q_j} |f(y)|\, dy.
+\end{align}
+With \eqref{large-ball-estimate}, we estimate further
+\begin{equation}
+    \le 2 \int_{B_{7,j}} |f(y)|\, dy \le 2\mu(B_{7,j})\alpha \le 2^{2a+1} \alpha \mu(B_{3,j})
+\end{equation}
+to obtain \eqref{eq-bj-L1}.
+Further, summing up \eqref{eq-bj-int} in $j$ yields \eqref{eq-b-L1}.
+At last, we estimate with \Cref{maximal-theorem}
+\begin{equation}
+    \sum_j \mu(B_{3,j}) \le 2^{2a} \sum_j \mu(B_j) \le 2^{2a} \mu(E_\alpha) \le \frac{2^{4a}}{\alpha}\int |f(y)|\, d\mu(y),
+\end{equation}
+proving \eqref{eq-bset-length-sum}.
+
+Assume now that $E_\alpha = X$. It follows from \Cref{maximal-theorem} that then $\mu(X)<\infty$.
+Define
+\begin{equation*}
+    g := \frac{1}{\mu(X)} \int |f(y)|\,d\mu(y)
+\end{equation*}
+and
+\begin{equation*}
+    b_1 := f - g.
+\end{equation*}
+Then $f = g + b_1$ and $\supp b_1 \subset B_{3,1}:=X$ and \eqref{eq-gb-dec}, \eqref{eq-g-L1-norm}, \eqref{eq-supp-bj}, \eqref{eq-bad-mean-zero} all hold immediately. By assumption, $\alpha>\frac{1}{\mu(X)}\int |f|\,d\mu = g$, so \eqref{eq-g-max} holds.
+We also have, using the definitions and the same assumption,
+\begin{equation}
+    \int |b_1(y)|\, d\mu(y) \le 2 \int |f(y)|\,d\mu(y) \le 2\alpha\mu(X),
+\end{equation}
+which verifies both \eqref{eq-b-L1} and \eqref{eq-bj-L1}.
+Finally, by \Cref{maximal-theorem},
+\begin{equation*}
+    \mu(X) \le \frac{2^{2a}}{\alpha} \int |f(y)|\,d\mu(y),
+\end{equation*}
+which shows \eqref{eq-bset-length-sum}.
+\end{proof}
+```
+
+We use {bpref "Calderon-Zygmund-decomposition"}[] to prove
+{bpref "calderon-zygmund-weak-1-1"}[]. For the rest of this section, fix
+$`f:X\to\mathbb C`, $`r>0`, and $`\alpha>0` as in that lemma. Define
+$$`
+c:=2^{-a^3-12a-4},\qquad \alpha':=c\alpha.
+`
+If $`\alpha'\le\mu(X)^{-1}\int|f|\,d\mu`, then
+$$`
+\mu\{x\in X:|T_rf(x)|>\alpha\}
+\le\mu(X)\le\frac1{\alpha'}\int|f(y)|\,d\mu(y)
+\le\frac{2^{a^3+19a}}\alpha\int|f(y)|\,d\mu(y),
+`
+which is the desired weak $`(1,1)` estimate. Hence assume
+$`\alpha'>\mu(X)^{-1}\int|f|\,d\mu`. Applying the decomposition at height
+$`\alpha'` gives
+$$`
+f=g+b=g+\sum_jb_j
+`
+with all the preceding properties. Write $`B_{3,j}=B(x_j,3r_j)` and let
+$`B_{6,j}=B(x_j,6r_j)`. Then
+$`\mu(B_{6,j})\le2^a\mu(B_{3,j})`. Finally set
+$`\Omega:=\bigcup_jB_{6,j}`. The following lemmas estimate $`T_rg` and
+$`T_rb` separately.
+
+```tex
+We use \Cref{Calderon-Zygmund-decomposition} to prove \Cref{calderon-zygmund-weak-1-1}. For the remainder of this section, let $f:X\to\C$, $r>0$ and $\alpha>0$ as in \Cref{calderon-zygmund-weak-1-1}.
+We define the constant
+\begin{equation} \label{weak-1-1-proof-cz-const}
+    c:= 2^{-a^3-12a-4}
+\end{equation}
+and $\alpha' := c\alpha$. If $\alpha'\le\frac{1}{\mu(X)}\int |f|\,d\mu$, then we directly have
+\begin{equation*}
+    \mu\left(\{x\in X: |T_r f(x)|>\alpha\}\right)\le \mu(X) \le \frac{1}{\alpha'} \int |f(y)|\, d\mu(y)
+    \le \frac{2^{a^3 + 19a}}{\alpha} \int |f(y)|\, d\mu(y),
+\end{equation*}
+which proves \eqref{eq-weak-1-1}.
+So assume from now on that $\alpha'>\frac{1}{\mu(X)}\int |f|\,d\mu$.
+Using \Cref{Calderon-Zygmund-decomposition} for $f$ and $\alpha'$, we obtain the decomposition
+\begin{equation*}
+    f=g+b=g+\sum_j b_j
+\end{equation*}
+such that the properties \eqref{eq-gb-dec}-\eqref{eq-b-L1} are satisfied (with $\alpha'$ replacing $\alpha$). Let
+\begin{equation}
+    \label{eq-Ij-cj}
+    B_{3,j}=B(x_j, 3r_j)
+\end{equation}
+as in the lemma. Then
+\begin{equation}
+    \label{eq-Ij*}
+    B_{6,j}=B(x_j, 6r_j)
+\end{equation}
+is a ball with the same center as $B_{3,j}$ but with
+\begin{equation}
+    \label{eq-Ij*-dim}
+    \mu(B_{6,j})\le 2^{a} \mu(B_{3,j}).
+\end{equation}
+Let
+\begin{equation}
+    \label{eq-omega}
+    \Omega:=\bigcup_j B_{6,j}.
+\end{equation}
+We deal with $T_rg$ and $T_rb$ separately in the following lemmas.
+```
+
+:::lemma_ "estimate-good" (lean := "estimate_good") (uses := "Calderon-Zygmund-decomposition")
+We have
+$$`
+\mu\{x\in X:|T_rg(x)|>\alpha/2\}
+\le\frac{2^{2a^3+3a+2}c}{\alpha}\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "estimate-good" (slot := statement)
+\begin{lemma}[Estimate good]
+    \label{estimate-good}
+    \leanok
+    \lean{estimate_good}
+    \uses{Calderon-Zygmund-decomposition}
+    \begin{equation*}
+        \mu\left(\{x\in X: |T_r g(x)|>{\alpha}/2\}\right)
+        \le \frac{2^{2a^3+3a+2}c}{\alpha} \int |f(y)|\, d\mu(y).
+    \end{equation*}
+
+\end{lemma}
+```
+
+:::proof "estimate-good"
+Proof. Monotonicity of the integral gives
+$$`
+\mu\{x\in X:|T_rg(x)|>\alpha/2\}
+\le\frac4{\alpha^2}\int|T_rg(y)|^2\,d\mu(y).
+`
+Using the strong $`L^2` assumption, followed by the pointwise and $`L^1`
+bounds on $`g`, the right side is at most
+$$`
+\frac{4\cdot2^{2a^3}}{\alpha^2}\int|g(y)|^2\,d\mu(y)
+\le\frac{2^{2a^3+3a+2}c}{\alpha}\int|g(y)|\,dy
+\le\frac{2^{2a^3+3a+2}c}{\alpha}\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "estimate-good" (slot := proof)
+\begin{proof}
+    \leanok
+    We estimate using monotonicity of the integral
+\begin{equation*}
+     \mu\left(\{x\in X: |T_r g(x)|>{\alpha}/2\}\right)\leq \frac{4}{\alpha^2} \int |T_r g(y)|^2\, d\mu(y).
+\end{equation*}
+Using \eqref{eq-strong-2-2-assumption} followed by \eqref{eq-g-max} and \eqref{eq-g-L1-norm}, we estimate the right hand side above by
+\begin{equation}
+    \label{eq-Hr-g}
+    \leq \frac{4\cdot 2^{2a^3}}{\alpha^2} \int |g(y)|^2\, d\mu(y)\leq \frac{2^{2a^3+3a+2}c}{\alpha} \int |g(y)|\, dy \le \frac{2^{2a^3+3a+2}c}{\alpha} \int |f(y)|\, d\mu(y).
+\end{equation}
+\end{proof}
+```
+
+:::lemma_ "estimate-bad-partial" (lean := "estimate_bad_partial") (uses := "Calderon-Zygmund-decomposition")
+Let $`x\in X\setminus\Omega`. Then
+$$`
+|T_rb(x)|\le3F(x)+\alpha/8,
+`
+where
+$$`
+F(x):=2^{a^3+2a+1}c\alpha\sum_{j\in J}
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac{\mu(B_{3,j})}{V(x,x_j)}.
+`
+:::
+
+```tex "estimate-bad-partial" (slot := statement)
+\begin{lemma}[Estimate bad partial]
+    \label{estimate-bad-partial}
+    \leanok
+    \lean{estimate_bad_partial}
+    \uses{Calderon-Zygmund-decomposition}
+    Let $x\in X\setminus\Omega$. Then
+    \begin{equation*}
+        |T_rb(x)| \le 3F(x)+\alpha/8,
+    \end{equation*}
+    where
+    \begin{equation*}
+        F(x) := 2^{a^3+2a+1} c\alpha \sum_{j\in J} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)}.
+    \end{equation*}
+\end{lemma}
+```
+
+:::proof "estimate-bad-partial"
+Proof. Decompose $`J` into the disjoint sets
+$$`
+\begin{aligned}
+\mathcal J_1(x)&:=\{j:r+3r_j\le\rho(x,x_j)\},\\
+\mathcal J_2(x)&:=\{j:r-3r_j\le\rho(x,x_j)<r+3r_j\},\\
+\mathcal J_3(x)&:=\{j:\rho(x,x_j)<r-3r_j\}.
+\end{aligned}
+`
+The triangle inequality gives
+$$`
+|T_rb(x)|\le
+\sum_{j\in\mathcal J_1(x)}|T_rb_j(x)|+
+\sum_{j\in\mathcal J_2(x)}|T_rb_j(x)|+
+\sum_{j\in\mathcal J_3(x)}|T_rb_j(x)|.
+`
+For $`j\in\mathcal J_3(x)`, the support of $`b_j` is contained in
+$`B_{3,j}\subset B(x,r)`, so the third sum vanishes.
+
+For $`j\in\mathcal J_1(x)`, the support is contained in
+$`X\setminus B(x,r)`, and hence
+$$`
+T_rb_j(x)=\int_{B_{3,j}}K(x,y)b_j(y)\,d\mu(y).
+`
+The mean-zero property of $`b_j` lets us replace the kernel by
+$`K(x,y)-K(x,x_j)`. Since $`x\notin\Omega`, for $`y\in B_{3,j}` we have
+$$`
+\rho(x,x_j)\ge6r_j>2\rho(x_j,y).
+`
+The kernel smoothness bound and the $`L^1` bound on each bad part therefore
+give
+$$`
+\begin{aligned}
+\sum_{j\in\mathcal J_1(x)}|T_rb_j(x)|
+&\le2^{a^3}\sum_j
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac1{V(x,x_j)}\int_{B_{3,j}}|b_j(y)|\,dy\\
+&\le2^{a^3+2a+1}c\alpha\sum_j
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac{\mu(B_{3,j})}{V(x,x_j)}=F(x).
+\end{aligned}
+`
+
+For $`j\in\mathcal J_2(x)`, set
+$$`
+d_j:=\frac1{\mu(B_{3,j})}\int_{B_{3,j}}
+\mathbf1_{X\setminus B(x,r)}(y)b_j(y)\,dy.
+`
+Then $`|d_j|\le2^{2a+1}c\alpha`, and
+$$`
+\begin{aligned}
+T_rb_j(x)
+&=\int_{B_{3,j}}K(x,y)
+  (\mathbf1_{X\setminus B(x,r)}(y)b_j(y)-d_j)\,dy
+  +\int_{B_{3,j}}d_jK(x,y)\,dy\\
+&=\int_{B_{3,j}}(K(x,y)-K(x,x_j))
+  (\mathbf1_{X\setminus B(x,r)}(y)b_j(y)-d_j)\,dy
+  +\int_{B_{3,j}}d_jK(x,y)\,dy.
+\end{aligned}
+`
+Thus
+$$`
+|T_rb_j(x)|\le
+\int_{B_{3,j}}|K(x,y)-K(x,x_j)|
+ (|b_j(y)|+2^{2a+1}c\alpha)\,dy
++2^{2a+1}c\alpha\int_{B_{3,j}}|K(x,y)|\,dy.
+`
+Using the same smoothness estimate as above and summing yields
+$$`
+\sum_{j\in\mathcal J_2(x)}|T_rb_j(x)|
+\le2F(x)+2^{2a+1}c\alpha
+\sum_{j\in\mathcal J_2(x)}\int_{B_{3,j}}|K(x,y)|\,d\mu(y).
+`
+
+Put $`A:=\bigcup_{j\in\mathcal J_2(x)}B_{3,j}`. We claim
+$$`
+A\subset B(x,3r)\setminus B(x,r/3).
+`
+Indeed, if $`j\in\mathcal J_2(x)` and $`y\in B_{3,j}`, then
+$`3r_j\le\rho(x,x_j)/2`. Consequently
+$$`
+\rho(x,x_j)<r+3r_j\le r+\tfrac12\rho(x,x_j),
+`
+so $`\rho(x,x_j)<2r` and $`\rho(x,y)<3r`. Similarly,
+$$`
+\rho(x,x_j)\ge r-3r_j\ge r-\tfrac12\rho(x,x_j),
+`
+so $`\rho(x,x_j)\ge2r/3` and $`\rho(x,y)\ge r/3`.
+
+The bounded-intersection property of the $`B_{3,j}`, the preceding annular
+containment, and the kernel size estimate give
+$$`
+\begin{aligned}
+\sum_{j\in\mathcal J_2(x)}\int_{B_{3,j}}|K(x,y)|\,d\mu(y)
+&\le2^{6a}\int_A|K(x,y)|\,d\mu(y)\\
+&\le2^{a^3+6a}\int_{B(x,3r)\setminus B(x,r/3)}
+  \frac1{\mu(B(x,r/3))}\,d\mu(y)\\
+&\le2^{a^3+6a}\frac{\mu(B(x,3r))}{\mu(B(x,r/3))}
+\le2^{a^3+10a}.
+\end{aligned}
+`
+Combining the three index-set estimates gives
+$$`
+|T_rb(x)|\le3F(x)+2^{a^3+12a+1}c\alpha.
+`
+By the definition $`c=2^{-a^3-12a-4}`, the last term is $`\alpha/8`, as
+claimed.
+:::
+
+```tex "estimate-bad-partial" (slot := proof)
+\begin{proof}
+\leanok
+We decompose the index set $J$ into the following disjoint sets:
+\begin{align*}
+    \mathcal{J}_1(x)&:=\{j\,: r+3r_j \le \rho(x,x_j) \},\\
+    \mathcal{J}_2(x)&:=\{j\,: r-3r_j \le \rho(x,x_j) < r+3r_j\},\\
+    \mathcal{J}_3(x)&:=\{j\,: \rho(x,x_j) < r-3r_j\}.
+\end{align*}
+Then
+\begin{alignat}{3}
+    \label{eq-b-dec-1}
+    |T_r b(x)|\le&&&\sum_{j\in \mathcal{J}_1(x)} |T_rb_j(x)| \\
+    \label{eq-b-dec-2}
+                &+&&\sum_{j\in \mathcal{J}_2(x)} |T_rb_j(x)| \\
+    \label{eq-b-dec-3}
+                &+&&\sum_{j\in \mathcal{J}_3(x)} |T_rb_j(x)|.
+\end{alignat}
+For all $j\in \mathcal{J}_3(x)$, $\supp b_j\subset B_{3,j}\subset B(x,r)$, and thus $T_rb_j(x)=0$, so $\eqref{eq-b-dec-3} = 0$.
+
+Next, for $j\in \mathcal{J}_1(x)$, $\supp b_j\subset B_{3,j}\subset X \setminus B(x,r)$, and we have
+\begin{equation*}
+    T_rb_j(x)=\int_{X\setminus B(x,r)} K(x,y) b_j(y)\,d\mu(y)=\int_{B_{3,j}} K(x,y) b_j(y)\,d\mu(y)\,.
+\end{equation*}
+
+Using \eqref{eq-bad-mean-zero}, the above is equal to
+\begin{equation*}
+    \int_{{3,j}} (K(x,y)-K(x,x_j)) b_j(y)\,d\mu(y)\,.
+\end{equation*}
+Since $x\in X\setminus\Omega$, we have for each $y\in B_{3,j}$ that
+\begin{equation}
+    \label{eq-Om-cj}
+    \rho(x,x_j)\ge 6r_j > 2\rho(x_j,y),
+\end{equation}
+so we can apply \eqref{eqkernel-y-smooth} to estimate
+\begin{equation*}
+    \eqref{eq-b-dec-1} \le \sum_{j\in \mathcal{J}_1(x)}\int_{B_{3,j}}\left(\frac{\rho(x_j,y)}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,x_j)} |b_j(y)|\, d\mu(y)
+\end{equation*}
+\begin{equation}
+    \le 2^{a^3} \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\int_{B_{3,j}} |b_j(y)|\, dy
+\end{equation}
+and by \eqref{eq-bj-L1},
+\begin{equation}
+    \label{eq-J1-diff-est}
+    \le 2^{a^3+2a+1} c\alpha \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)} = F(x).
+\end{equation}
+Next, we estimate \eqref{eq-b-dec-2}. For each $j\in \mathcal{J}_2(x)$, set
+\begin{equation*}
+    d_j:=\frac{1}{\mu(B_{3,j})}\int_{B_{3,j}} \mathbf{1}_{X\setminus B(x,r)}(y) b_j(y)\, dy.
+\end{equation*}
+Then by \eqref{eq-bj-L1}
+\begin{equation}
+    \label{eq-dj-est}
+    |d_j|\le 2^{2a+1} c\alpha.
+\end{equation}
+For each $j\in \mathcal{J}_2(x)$, we have
+\begin{align*}
+    T_r b_j(x)&=\int_{B_{3,j}} K(x,y) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\, dy + \int_{B_{3,j}} d_j K(x,y) \, dy \\
+    &= \int_{B_{3,j}} (K(x,y)-K(x,x_j)) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\, dy + \int_{B_{3,j}} d_j K(x,y) \, dy.
+\end{align*}
+Thus, using the triangle inequality, the equation above and \eqref{eq-dj-est}, we obtain
+\begin{equation*}
+    |T_r b_j(x)|\le
+\end{equation*}
+\begin{equation}
+    \label{eq-J2-diff-est}
+    \int_{B_{3,j}} |K(x,y)-K(x,x_j)| \left(|b_j(y)|+2^{2a+1} c\alpha\right)\, dy +2^{2a+1} c\alpha \int_{B_{3,j}}  |K(x,y)| \, dy.
+\end{equation}
+By \eqref{eq-Om-cj}, we can apply \eqref{eqkernel-y-smooth} and arguing as in \eqref{eq-J1-diff-est}, we get that
+\begin{equation}
+    \label{eq-J2-diff-est-2}
+    \eqref{eq-b-dec-2} \le 2F(x) + 2^{2a+1}c\alpha \sum_{j\in\mathcal{J}_2(x)} \int_{B_{3,j}}  |K(x,y)|\,d\mu(y),
+\end{equation}
+with $F$ as in \eqref{eq-J1-diff-est}.
+Define
+\begin{equation*}
+    A := \bigcup_{j \in \mathcal{J}_2(x)} B_{3,j}.
+\end{equation*}
+We claim that
+\begin{equation}
+    \label{eq-J2-union-subset}
+    A\subset B(x,3r) \setminus B(x,\frac{r}{3}).
+\end{equation}
+Indeed, for each $j\in \mathcal{J}_2(x)$ and $y\in B_{3,j}$, using again \eqref{eq-Om-cj},
+\begin{equation*}
+    \rho(x,x_j) < r+r_{3,j} \le r + \frac{1}{2} \rho(x,x_j) \implies \rho(x,x_j) < 2r
+\end{equation*}
+and hence
+\begin{equation*}
+    \rho(x,y) \le \rho(x,x_j) + \rho(x_j,y) < 2r + 3r_j \le 2r + \frac{1}{2}\rho(x,x_j) < 3r.
+\end{equation*}
+For the lower bound, we observe
+\begin{equation*}
+    \rho(x,x_j) \ge r-3r_j \ge r - \frac{1}{2} \rho(x,x_j) \implies \rho(x,x_j) \ge \frac{2}{3}r,
+\end{equation*}
+and conclude
+\begin{equation*}
+    \rho(x,y) \ge \rho(x,x_j) - \rho(y,x_j) \ge \rho(x,x_j) - 3r_j \ge \rho(x,x_j) - \frac{1}{2}\rho(x,x_j) \ge \frac{1}{3} r.
+\end{equation*}
+
+Using the bounded intersection property of the $B_{3,j}$, \eqref{eq-J2-union-subset} and \eqref{eqkernel-size}, we get
+\begin{align}
+    \sum_{j\in\mathcal{J}_2(x)} \int_{B_{3,j}}  |K(x,y)|\,d\mu(y) &\le 2^{6a} \int_{A}  |K(x,y)|\,d\mu(y) \\
+    &\le 2^{6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})}  |K(x,y)|\,d\mu(y) \\
+    &\le 2^{6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{2^{a^3}}{V(x,y)} \,d\mu(y) \\
+    &\le 2^{a^3+6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{1}{\mu(B(x,\frac{r}{3}))} \,d\mu(y) \\
+    &\le 2^{a^3+6a} \frac{\mu(B(x,3r))}{\mu(B(x,\frac{r}{3}))} \\
+    \label{eq-J2-diff-est-4}
+    &\le 2^{a^3+10a}.
+\end{align}
+
+Combining the estimates \eqref{eq-J1-diff-est} for \eqref{eq-b-dec-1}, \eqref{eq-J2-diff-est-2} for \eqref{eq-b-dec-2}, and \eqref{eq-J2-diff-est-4}, we get
+\begin{equation*}
+    |T_rb(x)|\leq 3F(x)+2^{a^3+12a+1}c\alpha.
+\end{equation*}
+By the definition \eqref{weak-1-1-proof-cz-const} of $c$, this equals
+\begin{equation*}
+    3F(x)+\alpha/8.
+\end{equation*}
+\end{proof}
+```
+
+:::lemma_ "estimate-F-set" (lean := "distribution_czOperatorBound") (uses := "Calderon-Zygmund-decomposition,geometric-series-estimate")
+For $`F` as defined in {bpref "estimate-bad-partial"}[],
+$$`
+\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}
+\le\frac{2^{a^3+9a+4}}\alpha\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "estimate-F-set" (slot := statement)
+\begin{lemma}[Estimate F set]
+    \label{estimate-F-set}
+    \leanok
+    \lean{distribution_czOperatorBound}
+    \uses{Calderon-Zygmund-decomposition,geometric-series-estimate}
+    For $F$ as defined in \Cref{estimate-bad-partial}, we have
+    \begin{equation}
+        \label{eq-F-X-minus-Omega}
+        \mu(\{x\in X\setminus\Omega: F(x)>\alpha/8\}) \le \frac{2^{a^3+9a+4}}{\alpha} \int |f(y)|\,d\mu(y)\,.
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "estimate-F-set"
+Proof. First,
+$$`
+\begin{aligned}
+\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}
+&\le\frac8\alpha\int_{X\setminus\Omega}F(x)\,d\mu(x)\\
+&\le\frac8\alpha\int_{X\setminus\Omega}
+2^{a^3+2a+1}c\alpha\sum_j
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac{\mu(B_{3,j})}{V(x,x_j)}\,d\mu(x)\\
+&\le2^{a^3+2a+4}c\sum_j\mu(B_{3,j})
+\int_{X\setminus B_{6,j}}
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac1{V(x,x_j)}\,d\mu(x).
+\end{aligned}
+`
+For every $`j`, doubling gives
+$$`
+V(x,x_j)=\mu(B(x,\rho(x,x_j)))
+\ge2^{-a}\mu(B(x,2\rho(x,x_j)))
+\ge2^{-a}\mu(B(x_j,\rho(x_j,x))).
+`
+Decomposing $`X\setminus B_{6,j}` into dyadic annuli and using
+{bpref "geometric-series-estimate"}[] therefore yields
+$$`
+\begin{aligned}
+&\int_{X\setminus B_{6,j}}
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac1{V(x,x_j)}\,d\mu(x)\\
+&\quad\le2^a\int_{X\setminus B_{6,j}}
+\left(\frac{3r_j}{\rho(x,x_j)}\right)^{1/a}
+\frac1{\mu(B(x_j,\rho(x_j,x)))}\,d\mu(x)\\
+&\quad\le2^a\sum_{n=1}^\infty
+\int_{B(x_j,2^{n+1}3r_j)\setminus B(x_j,2^n3r_j)}
+\left(\frac{3r_j}{2^n3r_j}\right)^{1/a}
+\frac1{\mu(B(x_j,2^n3r_j))}\,d\mu(x)\\
+&\quad\le2^a\sum_{n=1}^\infty
+2^{-n/a}\frac{\mu(B(x_j,2^{n+1}3r_j))}
+{\mu(B(x_j,2^n3r_j))}
+\le2^{3a}.
+\end{aligned}
+`
+Substituting this estimate and using the total measure bound for the
+$`B_{3,j}` proves
+$$`
+\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}
+\le\frac{2^{a^3+9a+4}}\alpha\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "estimate-F-set" (slot := proof)
+\begin{proof}
+    \leanok
+    We estimate
+    \begin{align}
+        \mu(\{x\in X\setminus\Omega&: F(x)> \alpha/8\})
+        \le \frac{8}{\alpha} \int_{X\setminus \Omega} F(x)\,d\mu(x) \\
+        &\le \frac{8}{\alpha} \int_{X\setminus \Omega} 2^{a^3+2a+1} c\alpha \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)}\,d\mu(x) \\
+        \label{eq-F-est-1}
+        &\le 2^{a^3+2a+4} c \sum_{j} \mu(B_{3,j}) \int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\,d\mu(x)
+    \end{align}
+    Using
+    \begin{equation*}
+        V(x,x_j) = \mu(B(x,\rho(x,x_j))) \ge 2^{-a}\mu(B(x,2\rho(x,x_j))) \ge 2^{-a} \mu(B(x_j,\rho(x_j,x))),
+    \end{equation*}
+    we have for all $j\in J$,
+    \begin{align*}
+        &\int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\,d\mu(x) \\
+        \le& 2^a \int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{\mu(B(x_j,\rho(x_j,x)))}\,d\mu(x) \\
+        \le&2^a \sum_{n=1}^\infty \int_{B(x_j,2^{n+1}\cdot3r_j)\setminus B(x_j,2^n\cdot3r_j)} \left(\frac{3r_j}{2^n \cdot3r_j}\right)^{\frac{1}{a}}\frac{1}{\mu(B(x_j,2^n \cdot3r_j))}\,d\mu(x) \\
+        \le&2^a \sum_{n=1}^\infty 2^{-\frac{n}{a}} \frac{\mu(B(x_j,2^{n+1}\cdot3r_j))}{\mu(B(x_j,2^n \cdot3r_j))} \\
+        \le&2^{3a},
+    \end{align*}
+    where we used \Cref{geometric-series-estimate} in the last step.
+    Plugging this into \eqref{eq-F-est-1} and using \eqref{eq-bset-length-sum}, we conclude that
+    \begin{equation*}
+        \mu(\{x\in X\setminus\Omega: F(x)> \alpha/8\}) \le \frac{2^{a^3+9a+4}}{\alpha} \int |f(y)|\,d\mu(y)\,.
+    \end{equation*}
+\end{proof}
+```
+
+:::lemma_ "estimate-bad" (lean := "estimate_bad") (uses := "Calderon-Zygmund-decomposition,estimate-bad-partial,estimate-F-set")
+We have
+$$`
+\mu\{x\in X:|T_rb(x)|>\alpha/2\}
+\le\frac{2^{5a}/c+2^{a^3+9a+4}}\alpha\int|f(y)|\,d\mu(y).
+`
+:::
+
+```tex "estimate-bad" (slot := statement)
+\begin{lemma}[Estimate bad]
+    \label{estimate-bad}
+    \leanok
+    \lean{estimate_bad}
+    \uses{Calderon-Zygmund-decomposition,estimate-bad-partial,estimate-F-set}
+    We have
+    \begin{equation*}
+        \mu\left({\{x\in X: |T_r b(x)|>\alpha/2\}}\right) \le  \frac{\frac{2^{5a}}{c} + 2^{a^3+9a+4}}{\alpha} \int |f(y)|\,d\mu(y) \,.
+    \end{equation*}
+\end{lemma}
+```
+
+:::proof "estimate-bad"
+Proof. Split the exceptional set into its parts inside and outside
+$`\Omega`:
+$$`
+\mu\{x\in X:|T_rb(x)|>\alpha/2\}
+\le\mu(\Omega)+
+\mu\{x\in X\setminus\Omega:|T_rb(x)|>\alpha/2\}.
+`
+The enlargement estimate for $`B_{6,j}` and the total measure bound for
+$`B_{3,j}` give
+$$`
+\mu(\Omega)\le\sum_j\mu(B_{6,j})
+\le2^a\sum_j\mu(B_{3,j})
+\le\frac{2^{5a}}{c\alpha}\int|f(y)|\,d\mu(y).
+`
+By {bpref "estimate-bad-partial"}[] and the triangle inequality,
+$$`
+\mu\{x\in X\setminus\Omega:|T_rb(x)|>\alpha/2\}
+\le\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}.
+`
+The conclusion follows from {bpref "estimate-F-set"}[].
+:::
+
+```tex "estimate-bad" (slot := proof)
+\begin{proof}
+    \leanok
+    We estimate
+    \begin{equation*}
+        \mu\left(\{x\in X: |T_r b(x)|>\alpha/2\}\right)
+    \end{equation*}
+    \begin{equation}
+        \label{eq-set-dec-2}
+        \le \mu (\Omega) +  \mu\left(\{x\in X\setminus\Omega: |T_r b(x)|>{\alpha}/2\}\right)\,.
+    \end{equation}
+    Using \eqref{eq-Ij*-dim} and \eqref{eq-bset-length-sum}, we conclude that
+    \begin{equation}
+        \label{eq-omega-bd}
+        \mu(\Omega) \le \sum_{j} \mu (B_{6,j})
+        \le 2^a \sum_j \mu(B_{3,j}) \le \frac{2^{5a}}{c\alpha} \int |f(y)|\, d\mu(y)\,.
+    \end{equation}
+    It follows from \Cref{estimate-bad-partial} and the triangle inequality that
+    \begin{equation}
+        \label{eq-set-dec-3}
+        \mu({\{x\in X\setminus\Omega: |T_r b(x)|>\alpha/2\}}) \le \mu(\{x\in X\setminus\Omega: F(x)> \alpha/8\})\,.
+    \end{equation}
+    The claim now follows from \Cref{estimate-F-set}.
+\end{proof}
+```
+
 # Proof of The Classical Carleson Theorem
 
 The convergence of partial Fourier sums is proved in
