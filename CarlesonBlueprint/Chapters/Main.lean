@@ -13289,7 +13289,7 @@ $$`T'f(x)=2^{-2a^3}Tf(x).`
 
 The proof of {bpref "nontangential-from-simple"}[] relies on the following
 auxiliary lemma, which is proved in
-the later Calderon--Zygmund Decomposition subsection.
+{ref "subsec-CZD"}[Calderon--Zygmund Decomposition].
 
 ```tex
 The proof of \Cref{nontangential-from-simple} relies on the following auxiliary lemma which is proved in \Cref{subsec-CZD}.
@@ -13324,7 +13324,7 @@ $$`\mu\left(\{x\in X:|T_rf(x)|>\alpha\}\right)
 \end{lemma}
 ```
 
-Throughout the Calderon--Zygmund Decomposition subsection and
+Throughout {ref "subsec-CZD"}[Calderon--Zygmund Decomposition] and
 {ref "subsec-cotlar"}[Proof of Cotlar's Inequality], for any measurable
 bounded function $`w:X\to\C`, let $`Mw:X\to[0,\infty)` denote the
 corresponding Hardy--Littlewood maximal function defined in
@@ -13871,6 +13871,380 @@ by
 \end{equation}
 This proves the lemma.
 \end{proof}
+```
+
+For the next lemma, define
+$$`
+T_*^rg(x):=\sup_{r<R}\sup_{x'\in B(x,R)}|T_Rg(x')|.
+`
+
+```tex
+For the next Lemma, we define the following operation.
+\begin{equation}\label{eq-simple--nontangential}
+    T_{*}^r g(x):=\sup_{r<R}\sup_{x'\in B(x,R)} |T_R(g)(x')| \, .
+\end{equation}
+```
+
+:::lemma_ "simple-nontangential-operator" (lean := "simple_nontangential_operator, lowerSemicontinuous_simpleNontangentialOperator") (uses := "Hardy-Littlewood, Cotlar-estimate")
+Assume the two-sided $`T_r` bound. For every $`r>0` and every bounded
+measurable function $`g` supported on a set of finite measure, the function
+$`T_*^rg` is lower-semicontinuous and
+$$`
+\|T_*^rg\|_2\le 2^{a^3+24a+6}\|g\|_2.
+`
+:::
+
+```tex "simple-nontangential-operator" (slot := statement)
+\begin{lemma}[simple nontangential operator]\label{simple-nontangential-operator}
+\leanok
+\lean{simple_nontangential_operator, lowerSemicontinuous_simpleNontangentialOperator}
+\uses{Hardy-Littlewood,Cotlar-estimate}
+Assume that \eqref{two-sided-Hr-bound-assumption} holds.
+For every $r>0$ and every bounded measurable function $g$ supported on a set of finite measure
+the function $T_{*}^r g$ is lower-semicontinuous and we have
+\begin{equation}\label{trzerobound}
+    \|T_{*}^rg\|_2\le 2^{a^3+24a+6}\|g\|_2,
+\end{equation}
+\end{lemma}
+```
+
+:::proof "simple-nontangential-operator"
+Proof. For fixed $`\lambda`, rewriting $`x'\in B(x,R)` as
+$`x\in B(x',R)` gives
+$$`
+\{x:T_*^rg(x)>\lambda\}
+=\bigcup_{r<R}\bigcup_{\{x':|T_Rg(x')|>\lambda\}}B(x',R).
+`
+The right-hand side is open, hence $`T_*^rg` is lower-semicontinuous by
+definition.
+
+For the second part, {bpref "estimate-x-shift"}[] and the triangle inequality
+give, for every $`x\in X`,
+$$`
+T_*^rg(x)\le 2^{a^3+2a+2}Mg(x)+\sup_{r<R}|T_Rg(x)|.
+`
+Using {bpref "Cotlar-estimate"}[] further gives
+$$`
+T_*^rg(x)
+\le 2^{a^3+2a+2}Mg(x)+2^{a^3+20a+3}Mg(x)+2^2M(T_rg)(x).
+`
+Taking the $`L^2` norm and applying {bpref "Hardy-Littlewood"}[] with
+$`a=4`, $`p_2=2`, and $`p_1=1`, we obtain
+$$`
+\begin{aligned}
+\|T_*^rg\|_2
+&\le 2^{a^3+20a+4}\|Mg\|_2+2^2\|M(T_rg)\|_2\\
+&\le 2^{a^3+24a+5}\|g\|_2+2^{4a+3}\|T_rg\|_2.
+\end{aligned}
+`
+The assumed $`T_r` bound now gives
+$$`
+\|T_*^rg\|_2
+\le 2^{a^3+24a+5}\|g\|_2+2^{a^3+4a+3}\|g\|_2,
+`
+which proves the claimed inequality.
+:::
+
+```tex "simple-nontangential-operator" (slot := proof)
+\begin{proof}
+\leanok
+For a fixed $\lambda$ we note that (rewriting $x'\in B(x,R)$ as $x\in B(x',R)$):
+\begin{equation}
+    \{x : T_{*}^r g(x) > \lambda\} = \bigcup_{r<R}\bigcup_{\{x':|T_R(g)(x')|>\lambda\}} B(x',R)
+\end{equation}
+The right-hand side is open, hence $T_{*}^r g$ is lower-semicontinuous by definition.
+
+For the second part, with \Cref{estimate-x-shift} and the triangle inequality, we estimate for every $x\in X$
+\begin{equation}
+     T_{*}^r g(x)
+     \le 2^{a^3 + 2a + 2} Mg(x)+\sup_{r<R} |T_R(g)(x)|\, .
+\end{equation}
+Using further \Cref{Cotlar-estimate}, we estimate
+\begin{equation}
+      T_{*}^r g(x)
+     \le 2^{a^3+2a+2}Mg(x) + 2^{a^3+20a+3}Mg(x) + 2^{2}M(T_rg)(x)\, .
+\end{equation}
+Taking the $L^2$ norm and using \Cref{Hardy-Littlewood} with $a=4$  and $p_2=2$ and $p_1=1$ , we obtain
+\begin{equation}
+      \|T_{*}^r g\|_2
+     \le 2^{a^3+20a+4} \|Mg\|_2 + 2^{2}\|M(T_rg)\|_2
+\end{equation}
+\begin{equation}
+     \le 2^{a^3+24a+5} \|g\|_2 + 2^{4a+3}\|T_r g\|_2\, .
+\end{equation}
+Applying \eqref{two-sided-Hr-bound-assumption} gives
+\begin{equation}
+      \|T_{*}^r g\|_2\le 2^{a^3+24a+5}\|g\|_2 + 2^{a^3+4a+3}\|g\|_2\, .
+\end{equation}
+This shows \eqref{trzerobound} and completes the proof of the inequality.
+\end{proof}
+```
+
+To pass from the one-sided truncations in $`T_r` and $`T_*^r` to the
+two-sided truncation in $`T_*`, the following two lemmas show that the integral
+in the definition of the non-tangential operator can be exchanged for an
+integral over the difference of two balls.
+
+```tex
+%fixme: Change location of next argument?
+In order to pass from the one-sided truncation in $T_r$ and $T_{*}^r$ to the two-sided truncation in $T_*$, we show in the following two lemmas that the integral in \eqref{def-tang-unm-op} can be exchanged for an integral over the difference of two balls.
+```
+
+:::lemma_ "small-annulus" (lean := "small_annulus_right, small_annulus_left")
+Let $`f:X\to\C` be a bounded measurable function supported on a set of finite
+measure, and let $`x\in X` and $`R>0`. Then, for all $`\epsilon>0`, there is
+some $`\delta>0` such that
+$$`
+\left|\int_{R<\rho(x,y)<R+\delta}K(x,y)f(y)\,d\mu(y)\right|\le\epsilon
+`
+and
+$$`
+\left|\int_{R-\delta<\rho(x,y)<R}K(x,y)f(y)\,d\mu(y)\right|\le\epsilon.
+`
+:::
+
+```tex "small-annulus" (slot := statement)
+\begin{lemma}[small annulus] \label{small-annulus}
+    \leanok
+    \lean{small_annulus_right, small_annulus_left}
+    Let $f:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+    Let $x\in X$ and $R>0$.
+    Then, for all $\epsilon>0$, there exists some $\delta>0$ such that
+    \begin{equation}
+        \left| \int_{R<\rho(x,y)<R+\delta} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon
+    \end{equation}
+    and
+    \begin{equation}
+        \left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon \,.
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "small-annulus"
+Proof. We prove only the second inequality; the first is analogous. The
+integrand is bounded in $`X\setminus B(x,\frac R2)`. Thus, for
+$`0<\delta\le\frac R2`, its absolute value is at most
+$$`
+\frac{2^{a^3}}{\mu(B(x,\frac R2))}\sup_{y\in X}|f(x)|
+\cdot\mu\bigl(\{y\in X:R-\delta<\rho(x,y)<R\}\bigr).
+`
+By continuity from above of $`\mu`, the right factor becomes arbitrarily small
+as $`\delta\to0`. Hence, for sufficiently small $`\delta`, the whole
+expression is at most $`\epsilon`.
+:::
+
+```tex "small-annulus" (slot := proof)
+\begin{proof}
+\leanok
+We only prove the second inequality, the first one is analogous.
+Note that the integrand is bounded in $X\setminus B(x,\frac{R}{2})$. So for $0<\delta\le\frac{R}{2}$,
+\begin{align*}
+    &\left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \\
+    \le &\frac{2^{a^3}}{\mu(B(x,\frac{R}{2}))} \, \sup_{y\in X}|f(x)| \cdot \mu(\{y\in X: R-\delta<\rho(x,y)<R\}).
+\end{align*}
+By continuity from above of $\mu$, the right factor becomes arbitrarily small as $\delta\rightarrow 0$. Thus, for small enough $\delta$, the whole expression is $\le\epsilon$.
+\end{proof}
+```
+
+:::lemma_ "nontangential-operator-boundary" (lean := "nontangential_operator_boundary") (uses := "small-annulus")
+Let $`f:X\to\C` be a bounded measurable function supported on a set of finite
+measure. For all $`x\in X`,
+$$`
+T_*f(x)=\sup_{R_1<R_2}\sup_{x'\in B(x,R_1)}
+\left|\int_{B(x',R_2)\setminus B(x',R_1)}K(x',y)f(y)\,d\mu(y)\right|.
+`
+:::
+
+```tex "nontangential-operator-boundary" (slot := statement)
+\begin{lemma}[nontangential operator boundary]
+    \label{nontangential-operator-boundary}
+    \leanok
+    \lean{nontangential_operator_boundary}
+    \uses{small-annulus}
+    Let $f:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+    For all $x\in X$,
+    \begin{equation}
+    \label{tang-unm-op-eq}
+        T_*f(x) = \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{B(x',R_2)\setminus B(x',R_1)} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "nontangential-operator-boundary"
+Proof. We prove two inequalities. Let $`\epsilon>0`, $`R_1<R_2`, and
+$`x'\in B(x,R_1)`. For sufficiently small $`\delta>0`,
+$$`
+\begin{aligned}
+&\left|\int_{R_1<\rho(x',y)<R_2}K(x',y)f(y)\,d\mu(y)\right|\\
+&\quad\le
+\left|\int_{R_1<\rho(x',y)<R_1+\delta}K(x',y)f(y)\,d\mu(y)\right|\\
+&\qquad+
+\left|\int_{R_1+\delta\le\rho(x',y)<R_2}K(x',y)f(y)\,d\mu(y)\right|.
+\end{aligned}
+`
+By {bpref "small-annulus"}[], choose $`\delta` so that the first term on the
+right is at most $`\epsilon`; we may assume $`R_1+\delta<R_2`. The second term
+is bounded by the right-hand side of the claimed equality. Thus the expression
+is at most
+$$`
+\epsilon+\sup_{R_1<R_2}\sup_{x'\in B(x,R_1)}
+\left|\int_{B(x',R_2)\setminus B(x',R_1)}K(x',y)f(y)\,d\mu(y)\right|.
+`
+The inequality remains true after taking the suprema over $`R_1<R_2` and
+$`\rho(x,x')<R_1`. Since $`\epsilon` is arbitrary, this proves the first
+inequality.
+
+For the other direction, let again $`\epsilon>0`, $`R_1<R_2`, and
+$`x'\in B(x,R_1)`. For $`\delta>0`,
+$$`
+\begin{aligned}
+&\left|\int_{B(x',R_2)\setminus B(x',R_1)}K(x',y)f(y)\,d\mu(y)\right|\\
+&\quad\le
+\left|\int_{R_1-\delta<\rho(x',y)<R_1}K(x',y)f(y)\,d\mu(y)\right|\\
+&\qquad+
+\left|\int_{R_1-\delta<\rho(x',y)<R_2}K(x',y)f(y)\,d\mu(y)\right|.
+\end{aligned}
+`
+By {bpref "small-annulus"}[], choose $`\delta` so that the first term on the
+right is at most $`\epsilon`; we may assume $`\rho(x,x')<R_1-\delta`. The
+second term is bounded by the left-hand side of the claimed equality. Hence
+the expression is at most
+$$`
+\epsilon+\sup_{R_1<R_2}\sup_{x'\in B(x,R_1)}
+\left|\int_{R_1<\rho(x',y)<R_2}K(x',y)f(y)\,d\mu(y)\right|.
+`
+Taking the same suprema and letting $`\epsilon` tend to zero proves the second
+inequality.
+:::
+
+```tex "nontangential-operator-boundary" (slot := proof)
+\begin{proof}
+\leanok
+We show two inequalities. Let $\epsilon>0$.
+Let $R_1<R_2$ and $x'\in B(x,R_1)$. Then for small enough $\delta>0$,
+\begin{alignat}{3}
+    \label{eq-without-suprema-1}
+    &&&\left|\int_{R_1<\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+    \label{eq-diff-small-1}
+    \le &&&\left|\int_{R_1<\rho(x',y)<R_1+\delta} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+    \label{eq-other-1}
+    &+&&\left|\int_{R_1+\delta\le\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+\end{alignat}
+By \Cref{small-annulus}, we can choose $\delta$ such that \eqref{eq-diff-small-1} is bounded by $\epsilon$. Without loss of generality, we can assume $R_1+\delta<R_2$. Then \eqref{eq-other-1} is bounded by the right hand side of \eqref{tang-unm-op-eq} and we obtain
+\begin{equation*}
+    \le \epsilon + \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{B(x',R_2)\setminus B(x',R_1)} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+\end{equation*}
+The inequality still holds when taking the suprema over $R_1<R_2$ and $\rho(x,x')<R_1$ in \eqref{eq-without-suprema-1}. Since $\epsilon>0$ was arbitrary, this proves the first inequality.
+
+The other direction is similar. Let $\epsilon>0$.
+Let $R_1<R_2$ and $x'\in B(x,R_1)$. Then for $\delta>0$,
+\begin{alignat}{3}
+    \label{eq-without-suprema-2}
+    &&&\left|\int_{B(x',R_2)\setminus B(x',R_1)} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+    \label{eq-diff-small-2}
+    \le &&&\left|\int_{R_1-\delta<\rho(x',y)< R_1} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+    \label{eq-other-2}
+    &+&&\left|\int_{R_1-\delta<\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+\end{alignat}
+
+By \Cref{small-annulus}, we can choose $\delta$ such that \eqref{eq-diff-small-2} is bounded by $\epsilon$. Without loss of generality, we can assume $\rho(x,x')<R_1-\delta$. Then \eqref{eq-other-2} is bounded by the left hand side of \eqref{tang-unm-op-eq} and we obtain
+\begin{equation*}
+    \le \epsilon + \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{R_1<\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+\end{equation*}
+The inequality still holds when taking the suprema over $R_1<R_2$ and $\rho(x,x')<R_1$ in \eqref{eq-without-suprema-1}. Since $\epsilon>0$ was arbitrary, this proves the second inequality.
+\end{proof}
+```
+
+:::proof "nontangential-from-simple"
+Proof of {bpref "nontangential-from-simple"}[]. Fix $`g` as in the lemma.
+Applying {bpref "simple-nontangential-operator"}[] with a sequence of $`r`
+tending to zero and using Lebesgue monotone convergence gives
+$$`
+\|T_*^0g\|_2\le 2^{a^3+24a+6}\|g\|_2,
+`
+where
+$$`
+T_*^0g(x):=\sup_{0<R}\sup_{x'\in B(x,R)}
+\left|\int_{X\setminus B(x',R)}K(x',y)g(y)\,d\mu(y)\right|.
+`
+By {bpref "nontangential-operator-boundary"}[] and the triangle inequality,
+$$`
+\begin{aligned}
+T_*g(x)
+&\le\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)}
+\left|\int_{X\setminus B(x',R_1)}K(x',y)g(y)\,d\mu(y)\right|\\
+&\quad+\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)}
+\left|\int_{X\setminus B(x',R_2)}K(x',y)g(y)\,d\mu(y)\right|.
+\end{aligned}
+`
+The first integral does not depend on $`R_2`. In the second summand, enlarge
+the supremum to all $`x'\in B(x,R_2)`, after which the integral does not
+depend on $`R_1`. Therefore
+$$`
+\begin{aligned}
+T_*g(x)
+&\le\sup_{0<R_1}\sup_{x'\in B(x,R_1)}
+\left|\int_{X\setminus B(x',R_1)}K(x',y)g(y)\,d\mu(y)\right|\\
+&\quad+\sup_{0<R_2}\sup_{x'\in B(x,R_2)}
+\left|\int_{X\setminus B(x',R_2)}K(x',y)g(y)\,d\mu(y)\right|.
+\end{aligned}
+`
+Applying the triangle inequality to the $`L^2` norm and the bound for
+$`T_*^0g` twice proves the claimed estimate and completes the proof.
+:::
+
+```tex "nontangential-from-simple" (slot := proof)
+\begin{proof}[Proof of \Cref{nontangential-from-simple}]
+    \proves{nontangential-from-simple}
+\leanok
+Fix $g$ as in the Lemma.
+Applying \Cref{simple-nontangential-operator} with a
+sequence of $r$ tending to $0$ and using Lebesgue monotone convergence shows
+\begin{equation}\label{tzerobound}
+    \|T_*^{0}g\|_2\le 2^{a^3+24a+6}\|g\|_2,
+\end{equation}
+where
+\begin{equation}\label{eq-simpler--nontangential}
+    T_*^{0} g(x):=\sup_{0<R}\sup_{x'\in B(x,R)} \left|\int_{X\setminus B(x',R)}
+K(x',y) g(y)\, d\mu(y)\right|\, .
+\end{equation}
+We now write using \Cref{nontangential-operator-boundary} and the triangle inequality,
+\begin{alignat*}{3}\label{concretetstartriangle}
+    T_* g(x)\le&&&\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_1)}K(x',y) g(y)\, d\mu(y)\right| \\
+&+&&\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_2)} K(x',y) g(y)\, d\mu(y)\right|\, .
+\end{alignat*}
+Noting that the first integral does not depend on $R_2$ and
+estimating the second summand by the larger supremum over all
+$x'\in B(x,R_2)$, at which time the integral does not depend on $R_1$, we estimate further
+\begin{alignat*}{3}
+    \le&&&\sup_{0<R_1}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_1)}K(x',y) g(y)\, d\mu(y)\right| \\
+    &+  &&\sup_{0<R_2}\sup_{x'\in B(x,R_2)} \left|\int_{X\setminus B(x',R_2)} K(x',y) g(y)\, d\mu(y)\right|\, .
+\end{alignat*}
+    Applying the triangle inequality on the left-hand side
+    of \eqref{concretetstarbound} and applying
+     \eqref{tzerobound} twice
+    proves \eqref{concretetstarbound}.
+    This completes the proof of \Cref{nontangential-from-simple}.
+\end{proof}
+```
+
+## Calderon--Zygmund Decomposition
+%%%
+tag := "subsec-CZD"
+%%%
+
+```tex
+\subsection{Calder\'on-Zygmund Decomposition}
+\label{subsec-CZD}
+```
+
+Calderon--Zygmund decomposition is a tool for extending $`L^2` bounds to
+$`L^p` bounds with $`p<2`, or to the weak $`(1,1)` endpoint bound. It is
+classical and can be found in Stein's book.
+
+```tex
+Calder\'on-Zygmund decomposition is a tool to extend $L^2$ bounds to $L^p$ bounds with $p<2$ or to the so-called weak $(1, 1)$ type endpoint bound.
+It is classical and can be found in \cite{stein-book}.
 ```
 
 # Proof of The Classical Carleson Theorem
