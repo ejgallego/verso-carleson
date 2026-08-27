@@ -13200,6 +13200,202 @@ $$`\left|\int_G T f\,d\mu\right|
 \end{theorem}
 ```
 
+For the remainder of this chapter, fix an integer $`a\ge 4`, a doubling metric
+measure space $`(X,\rho,\mu,a)` and a two-sided Calderon--Zygmund kernel $`K`
+as in {bpref "two-sided-metric-space-Carleson"}[]. The following lemma is
+proved in {ref "subsec-cotlar"}[Proof of Cotlar's Inequality].
+
+```tex
+For the remainder of this chapter, fix an integer $a\ge 4$, a doubling metric measure space $(X,\rho,\mu,a)$ and a two-sided Calder\'on--Zygmund kernel $K$ as in \Cref{two-sided-metric-space-Carleson}.
+
+The following lemma is proved in \Cref{subsec-cotlar}.
+```
+
+:::lemma_ "nontangential-from-simple" (lean := "nontangential_from_simple") (uses := "simple-nontangential-operator, nontangential-operator-boundary")
+Assume `two-sided-Hr-bound-assumption` holds. Then, for every bounded
+measurable function $`g : X \to \C` supported on a set of finite measure, we
+have
+$$`\|T_*g\|_2\le 2^{3a^3}\|g\|_2.`
+:::
+
+```tex "nontangential-from-simple" (slot := statement)
+\begin{lemma}[nontangential-from-simple]\label{nontangential-from-simple}
+    \leanok
+    \lean{nontangential_from_simple}
+    \uses{simple-nontangential-operator, nontangential-operator-boundary}
+    Assume \eqref{two-sided-Hr-bound-assumption} holds.
+    Then, for every bounded measurable function $g : X \to \C$ supported on a set of finite measure we have
+    \begin{equation}\label{concretetstarbound}
+        \|T_*g\|_2\le 2^{3a^3}\|g\|_2.
+    \end{equation}
+\end{lemma}
+```
+
+:::proof "two-sided-metric-space-Carleson"
+Proof of {bpref "two-sided-metric-space-Carleson"}[]. Let $`1<q\le 2` be a
+real number. Let $`\Theta` be a cancellative compatible collection of
+functions. By the assumption `two-sided-Hr-bound-assumption`, we can apply
+{bpref "nontangential-from-simple"}[] to obtain, for every bounded measurable
+$`g:X\to\C` supported on a set of finite measure,
+$$`\|T_*g\|_2\le 2^{3a^3}\|g\|_2.`
+Define
+$$`K'(x,y):= 2^{-2a^3} K(x,y).`
+Then $`K'` is a two-sided Calderon--Zygmund kernel on
+$`(X,\rho,\mu,a)`. Denote the corresponding maximally truncated
+non-tangential singular operator by $`T_*'` and the corresponding generalized
+Carleson operator by $`T'`. With `original-operator-assumption`, we obtain for
+$`g` as above
+$$`\|T_*'g\|_2\le 2^{a^3}\|g\|_2.`
+Applying {bpref "metric-space-Carleson"}[] for $`K'` yields that for all Borel
+sets $`F` and $`G` in $`X` and all Borel functions $`f:X\to\C` with
+$`|f|\le \mathbf{1}_F`, we have
+$$`\left|\int_G T'f\,\mathrm{d}\mu\right|
+\le \frac{2^{450a^3}}{(q-1)^6}
+\mu(G)^{1-\frac1q}\mu(F)^{\frac1q}.`
+This finishes the proof since, for all $`x\in X`,
+$$`T'f(x)=2^{-2a^3}Tf(x).`
+:::
+
+```tex "two-sided-metric-space-Carleson" (slot := proof)
+\begin{proof}[Proof of \Cref{two-sided-metric-space-Carleson}]
+    \proves{two-sided-metric-space-Carleson}
+    \leanok
+    Let $1<q\le 2$ be a real number. Let $\Theta$ be a cancellative compatible collection of functions.
+    By the assumption \eqref{two-sided-Hr-bound-assumption}, we can apply \Cref{nontangential-from-simple} to obtain for every bounded measurable $g:X\to\C$ supported on a set of finite measure,
+    \begin{equation}\label{original-operator-assumption}
+        \|T_*g\|_2\le 2^{3a^3}\|g\|_2.
+    \end{equation}
+    Define
+    \begin{equation*}
+        K'(x,y):= 2^{-2a^3} K(x,y) \,.
+    \end{equation*}
+    Then $K'$ is a two-sided Calder\'on--Zygmund kernel on $(X,\rho,\mu,a)$. Denote the corresponding maximally truncated non-tangential singular operator by $T_*'$ and the corresponding generalized Carleson operator by $T'$.
+    With \eqref{original-operator-assumption}, we obtain for $g$ as above,
+    \begin{equation}\label{modified-operator-assumption}
+        \|T_*'g\|_2\le 2^{a^3}\|g\|_2.
+    \end{equation}
+    Applying \Cref{metric-space-Carleson} for $K'$ yields that for all Borel sets $F$ and $G$ in $X$ and
+    all Borel functions $f:X\to \C$ with
+    $|f|\le \mathbf{1}_F$, we have
+    \begin{equation*}
+        \left|\int_{G} T' f \, \mathrm{d}\mu\right| \leq \frac{2^{450a^3}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\, .
+    \end{equation*}
+    This finishes the proof since for all $x\in X$,
+    \begin{equation*}
+        T'f(x) = 2^{-2a^3} Tf(x) \,.
+    \end{equation*}
+\end{proof}
+```
+
+The proof of {bpref "nontangential-from-simple"}[] relies on the following
+auxiliary lemma, which is proved in
+the later Calderon--Zygmund Decomposition subsection.
+
+```tex
+The proof of \Cref{nontangential-from-simple} relies on the following auxiliary lemma which is proved in \Cref{subsec-CZD}.
+```
+
+:::lemma_ "calderon-zygmund-weak-1-1" (lean := "czOperator_weak_1_1") (uses := "Calderon-Zygmund-decomposition, estimate-bad, estimate-good")
+Let $`f:X\to\C` be a bounded measurable function supported on a set of finite
+measure and assume for some $`r>0` that for every bounded measurable function
+$`g:X\to\C` supported on a set of finite measure,
+$$`\|T_rg\|_2\le 2^{a^3}\|g\|_2.`
+Then for all $`\alpha>0`, we have
+$$`\mu\left(\{x\in X:|T_rf(x)|>\alpha\}\right)
+\le \frac{2^{a^3+19a}}{\alpha}\int |f(y)|\,d\mu(y).`
+:::
+
+```tex "calderon-zygmund-weak-1-1" (slot := statement)
+\begin{lemma}[Calderon-Zygmund Weak (1, 1)]
+    \label{calderon-zygmund-weak-1-1}
+    \leanok
+    \lean{czOperator_weak_1_1}
+    \uses{Calderon-Zygmund-decomposition,estimate-bad,estimate-good}
+    Let $f:X\to\C$ be a bounded measurable function supported on a set of finite measure and assume for some $r>0$ that for every bounded measurable function $g:X\to\C$ supported on a set of finite measure,
+    \begin{equation}
+        \label{eq-strong-2-2-assumption}
+        \|T_rg\|_{2}\le 2^{a^3} \|g\|_2.
+    \end{equation}
+    Then for all $\alpha>0$, we have
+    \begin{equation}
+        \label{eq-weak-1-1}
+        \mu\left(\{x\in X: |T_r f(x)|>\alpha\}\right)\le \frac{2^{a^3 + 19a}}{\alpha} \int |f(y)|\, d\mu(y).
+    \end{equation}
+\end{lemma}
+```
+
+Throughout the Calderon--Zygmund Decomposition subsection and
+{ref "subsec-cotlar"}[Proof of Cotlar's Inequality], for any measurable
+bounded function $`w:X\to\C`, let $`Mw:X\to[0,\infty)` denote the
+corresponding Hardy--Littlewood maximal function defined in
+{bpref "Hardy-Littlewood"}[]. In some cases a stronger formalization of
+{bpref "Hardy-Littlewood"}[] is used, where $`w` is not necessarily bounded;
+in particular it is applied to $`T_rg`. Apart from
+{bpref "Hardy-Littlewood"}[], these two subsections have no dependencies in
+the previous chapters.
+
+```tex
+Throughout \Cref{subsec-CZD} and \Cref{subsec-cotlar}, for any measurable bounded function $w: X \to \C$, let $Mw: X \to [0, \infty)$ denote the corresponding Hardy--Littlewood maximal function defined in \Cref{Hardy-Littlewood}.
+Note: In some cases, a stronger formalization of \Cref{Hardy-Littlewood} is used, where $w$ is not necessarily bounded. In particular it is applied to $T_rg$.
+Apart from \Cref{Hardy-Littlewood}, \Cref{subsec-CZD} and \Cref{subsec-cotlar} have no dependencies in the previous chapters.
+```
+
+## Proof of Cotlar's Inequality
+%%%
+tag := "subsec-cotlar"
+%%%
+
+```tex
+\subsection{Proof of Cotlar's Inequality}
+\label{subsec-cotlar}
+```
+
+:::lemma_ "geometric-series-estimate" (lean := "geometric_series_estimate")
+For all real numbers $`x\ge 4`,
+$$`\sum_{n=0}^\infty 2^{-\frac{n}{x}}\le 2^x.`
+:::
+
+```tex "geometric-series-estimate" (slot := statement)
+\begin{lemma}[geometric series estimate]
+    \label{geometric-series-estimate}
+    \leanok
+    \lean{geometric_series_estimate}
+    For all real numbers $x\ge 4$,
+    \begin{equation*}
+        \sum_{n=0}^\infty 2^{-\frac{n}{x}} \le 2^x.
+    \end{equation*}
+\end{lemma}
+```
+
+:::proof "geometric-series-estimate"
+Proof. By convexity, for all $`0\le\lambda\le1`,
+$$`2^{\lambda(-\frac14)}\le \lambda 2^{-\frac14}+(1-\lambda)2^0.`
+For $`\lambda:=\frac4x`, we obtain
+$$`2^{-\frac1x}\le 1-(1-2^{-\frac14})\frac4x.`
+We conclude
+$$`\sum_{n=0}^\infty 2^{-\frac nx}
+=\frac1{1-2^{-\frac1x}}
+\le\frac1{4(1-2^{-\frac14})}x\le2^x.`
+:::
+
+```tex "geometric-series-estimate" (slot := proof)
+\begin{proof}
+    \leanok
+    By convexity, for all $0\le\lambda\le1$
+    \begin{equation*}
+        2^{\lambda(-\frac{1}{4})} \le \lambda 2^{-\frac{1}{4}} + (1-\lambda)2^0.
+    \end{equation*}
+    For $\lambda:=\frac{4}{x}$, we obtain
+    \begin{equation*}
+        2^{-\frac 1 x} \le 1 - (1-2^{-\frac 1 4}) \frac{4}{x}.
+    \end{equation*}
+    We conclude
+    \begin{equation*}
+        \sum_{n=0}^\infty 2^{-\frac{n}{x}} = \frac{1}{1-2^{-\frac 1 x}} \le \frac{1}{4(1-2^{-\frac 1 4})} x \le 2^x.
+    \end{equation*}
+\end{proof}
+```
+
 # Proof of The Classical Carleson Theorem
 
 The convergence of partial Fourier sums is proved in
