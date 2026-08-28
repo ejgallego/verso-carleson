@@ -24,8 +24,6 @@ The harness command checks the dependency cache before running
 
 This repository follows the shared
 [`tools/verso-harness`](tools/verso-harness/) workflow. The root
-[`lean-toolchain`](lean-toolchain) selects Lean v4.33.0-rc2 for the wrapper.
-The formalization currently selects v4.33.0-rc1; the exact reviewed
-compatibility exception is recorded as `harness.wrapper_toolchain_override` in
-[`verso-harness.toml`](verso-harness.toml). [`lakefile.lean`](lakefile.lean)
-pins `VersoBlueprint` to the matching v4.33 release branch.
+[`lean-toolchain`](lean-toolchain) selects Lean v4.34.0-rc2. The root
+[`lakefile.lean`](lakefile.lean) pins mathlib to the RC2 revision selected by
+the formalization and `VersoBlueprint` to the matching v4.34 release branch.
