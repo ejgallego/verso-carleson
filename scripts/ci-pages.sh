@@ -14,6 +14,9 @@ fi
 step "warming dependency cache"
 python3 tools/verso-harness/scripts/ensure_dependency_cache.py --project-root . --warm-cache
 
+step "checking equation reference behavior"
+lake test
+
 step "building Blueprint site"
 lake exe vbp build --output _out/site 2>&1 | python3 scripts/filter_docstring_warnings.py --project-root .
 
@@ -22,3 +25,6 @@ python3 tools/verso-harness/scripts/ensure_dependency_cache.py --project-root .
 
 step "checking generated site"
 python3 tools/verso-harness/scripts/check_generated_site.py --project-root . --site-dir _out/site/html-multi
+
+step "checking section and equation links"
+python3 scripts/check_built_references.py --site-dir _out/site/html-multi
