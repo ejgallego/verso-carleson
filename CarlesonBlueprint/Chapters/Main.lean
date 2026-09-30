@@ -23,10 +23,12 @@ import Carleson.Psi
 import Carleson.TileExistence
 import Carleson.ToMathlib.HardyLittlewood
 import CarlesonBlueprint.TeXPrelude
+import CarlesonBlueprint.Equations
 
 open Verso.Genre
 open Verso.Genre.Manual
 open Informal
+open CarlesonBlueprint
 
 set_option maxRecDepth 8192
 
@@ -1433,7 +1435,7 @@ and be proved in {ref "sec-hlm"}[Proof of Vitali covering and Hardy--Littlewood]
 $`x\in X` and $`r>0` as defined in `eq-define-ball`. For a finite collection
 $`\mathcal{B}` of balls in $`X` and $`1\le p< \infty` define the measurable
 function $`M_{\mathcal{B},p}u` on $`X` by
-$$`M_{\mathcal{B},p}u(x):=\left(\sup_{B\in \mathcal{B}} \frac{\mathbf{1}_{B}(x)}{\mu(B)}\int _{B} |u(y)|^p\, d\mu(y)\right)^\frac 1p,`
+{equation "def-hlm"}[$$`M_{\mathcal{B},p}u(x):=\left(\sup_{B\in \mathcal{B}} \frac{\mathbf{1}_{B}(x)}{\mu(B)}\int _{B} |u(y)|^p\, d\mu(y)\right)^\frac 1p,`]
 Define further $`M_{\mathcal{B}}:=M_{\mathcal{B},1}`.
 
 ```tex
@@ -6529,7 +6531,7 @@ tag := "antichainboundary"
 
 Let an antichain $`\mathfrak{A}` and functions $`f`, $`g` as in
 {bpref "antichain-operator"}[] be given. We prove `eq-antiprop` in
-{bpref "sec-TT*-T*T"}[The density arguments] as the
+{ref "sec-TT___-T___T"}[The density arguments] as the
 geometric mean of two inequalities, each involving one of the two densities.
 One of these two inequalities will need a careful estimate formulated in
 {bpref "tile-correlation"}[] of the $`TT^*` correlation between two tile operators.
@@ -6626,7 +6628,7 @@ This proves the lemma.
 Let $`\mathcal{B}` be the collection of balls
 $$`B(\pc(\fp), 8D^{\ps(\fp)})`
 with $`\fp\in \mathfrak{A}` and recall the definition of $`M_{\mathcal{B}}`
-from {bpref "def-hlm"}[Definition `def-hlm`].
+from {ref "def-hlm" (domain := CarlesonBlueprint.equation)}[Definition `def-hlm`].
 
 ```tex
 % witness-label: main.antichain.4
@@ -16556,8 +16558,8 @@ $`\mathbb{R}` such that, for all $`0\le x\le 2\pi` and all
 $`2\pi`-periodic bounded measurable functions $`f`,
 $$`L_Nf(x)=\frac1{2\pi}\int_0^{2\pi}f(y)L'(x-y)\,dy.`
 Moreover, for all $`-\pi\le x\le \pi`,
-$$`\left|L'(x)-\mathbf{1}_{\{y:\,r<|y|<1\}}\kappa(x)\right|
-\le 12k_r(x).`
+{equation "eqdifflhil"}[$$`\left|L'(x)-\mathbf{1}_{\{y:\,r<|y|<1\}}\kappa(x)\right|
+\le 12k_r(x).`]
 :::
 
 ```tex "Dirichlet-approximation" (slot := statement)
@@ -16766,7 +16768,7 @@ supported in $`[1,4]`, then
 $$`\|H_rf\|_{L^2[2,3]}\le 2^8\|f\|_{L^2(\mathbb{R})}.`
 Let $`\tilde f` be the $`2\pi`-periodic extension of $`f` to
 $`\mathbb{R}`, and let $`N` be the smallest integer larger than $`1/r`.
-Then {bpref "eqdifflhil"}[the identity `eqdifflhil`] shows that the kernels of $`H_r` and $`2\pi L_N`
+Then {ref "eqdifflhil" (domain := CarlesonBlueprint.equation)}[the identity `eqdifflhil`] shows that the kernels of $`H_r` and $`2\pi L_N`
 differ by at most $`12k_r` on $`[-\pi,\pi]`. Consider $`x\in[2,3]`. When computing
 $`H_rf(x)` and $`2\pi L_Nf(x)`, the kernels are computed at points of the
 form $`x-y` with $`f(y)\ne0`, hence $`y\in[1,4]`. Since $`x\in[2,3]`, the

@@ -24,3 +24,8 @@ lean_lib CarlesonBlueprint where
 lean_exe «blueprint-gen» where
   root := `BlueprintMain
   supportInterpreter := true
+
+@[test_driver]
+lean_lib CarlesonBlueprintTests where
+  srcDir := "tests"
+  roots := #[`EquationReferences]
