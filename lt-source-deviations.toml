@@ -1,0 +1,7 @@
+version = 1
+
+[[reference]]
+chapter = "CarlesonBlueprint/Chapters/Main.lean"
+target = "sec-TT*-T*T"
+fingerprint = "5c543f9a4de1da1b72abf5ea2936e50b020f5777076038c67e9da638beb2f71a"
+reason = "The source section link is preserved by the existing resolved Manual ref sec-TT___-T___T; its anchor spelling replaces TeX asterisks."
