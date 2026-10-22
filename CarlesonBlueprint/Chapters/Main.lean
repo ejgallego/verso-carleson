@@ -2120,10 +2120,12 @@ an interval $`[-S,S]` for some sufficiently large $`S` depending on $`R`. To
 handle the case of the boundary part, we use the triangle inequality and the
 properties `supp-Ks`, `eq-Ks-size` of $`K_s` and $`|f| \le \mathbf{1}_F` to
 obtain for arbitrary $`s` the inequality
-$$`\left|\int_{R_1 < \rho(x,y) < R_2} K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y)\right|
-\leq \frac{2^{102 a^3}}{\mu(B(x, D^{s}))}
- \int_{B(x, D^s)} \mathbf{1}_F(y) \, \mathrm{d}\mu(y)
-\leq 2^{102 a^3} M\mathbf{1}_F(x),`
+$$`\begin{aligned}
+&\left|\int_{R_1 < \rho(x,y) < R_2} K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y)\right| \\
+&\leq \frac{2^{102 a^3}}{\mu(B(x, D^{s}))}
+ \int_{B(x, D^s)} \mathbf{1}_F(y) \, \mathrm{d}\mu(y) \\
+&\leq 2^{102 a^3} M\mathbf{1}_F(x),
+\end{aligned}`
 where $`M\mathbf{1}_F` is as defined in {bpref "Hardy-Littlewood"}[]. Now the left-hand
 side of `Rcut`, with $`T_{R_1,R_2,R}` replaced by the boundary part, can be
 estimated using Holder's inequality and {bpref "Hardy-Littlewood"}[] by
@@ -5688,7 +5690,11 @@ inequality that
 $$`d_{\fu}(\fcc(\fu), q) \le d_{\fu}(\fcc(\fu), \mfa) + d_{\fu}(\mfa, \fcc(\fu')) + d_{\fu}(\fcc(\fu'), \mfb) + d_{\fu}(\mfb, \fcc(\fu'')) + d_{\fu}(\fcc(\fu''), q).`
 Using `defdp` and the fact that
 $`\scI(\fu) = \scI(\fu') = \scI(\fu'')` this equals
-$$`d_{\fu}(\fcc(\fu), \mfa) + d_{\fu'}(\mfa, \fcc(\fu')) + d_{\fu'}(\fcc(\fu'), \mfb) + d_{\fu''}(\mfb, \fcc(\fu'')) + d_{\fu''}(\fcc(\fu''), q) < 100 + 100 + 100 + 100 + 1 < 500.`
+$$`\begin{aligned}
+&d_{\fu}(\fcc(\fu), \mfa) + d_{\fu'}(\mfa, \fcc(\fu')) \\
+&+ d_{\fu'}(\fcc(\fu'), \mfb) + d_{\fu''}(\mfb, \fcc(\fu'')) + d_{\fu''}(\fcc(\fu''), q) \\
+&< 100 + 100 + 100 + 100 + 1 < 500.
+\end{aligned}`
 Since $`4\fp \lesssim 500 \fu`, it follows that
 $`d_{\fp}(\fcc(\fp), q) < 4 < 10`. We have shown that
 $`B_{\fu''}(\fcc(\fu''), 1) \subset B_{\fp}(\fcc(\fp), 10)`, combining this
@@ -6212,11 +6218,13 @@ Define $\fP_{G \setminus G'}$ to be the set of all $\fp \in \fP$ such that $\mu(
 
 :::lemma_ "antichain-decomposition" (lean := "antichain_decomposition")
 We have that
-$$`\fP_2 \cap \fP_{G \setminus G'}
- = \bigcup_{k \ge 0} \bigcup_{n \ge k} \fL_0(k,n) \cap \fP_{G \setminus G'}
- \cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \fL_2(k,n,j) \cap \fP_{G \setminus G'}
- \cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_1(k,n,j,l) \cap \fP_{G \setminus G'}
- \cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_3(k,n,j,l)\cap \fP_{G \setminus G'}.`
+$$`\begin{aligned}
+&\fP_2 \cap \fP_{G \setminus G'}
+ = \bigcup_{k \ge 0} \bigcup_{n \ge k} \fL_0(k,n) \cap \fP_{G \setminus G'} \\
+&\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \fL_2(k,n,j) \cap \fP_{G \setminus G'} \\
+&\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_1(k,n,j,l) \cap \fP_{G \setminus G'} \\
+&\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_3(k,n,j,l)\cap \fP_{G \setminus G'}.
+\end{aligned}`
 :::
 
 ```tex "antichain-decomposition" (slot := statement)
@@ -6473,7 +6481,11 @@ $$`\fL(k,n) \cap \fP_{F,G} \subset \fP_{G \setminus G'} \cap \fP_{F, G} = \empty
 Applying now the triangle inequality according to the decomposition coming from
 {bpref "antichain-decomposition"}[], and then applying {bpref "antichain-operator"}[] to each
 term, we obtain the estimate
-$$`\sum_{k \ge 0} \sum_{n \ge k} (n + (2n+4) + 2(2n+4) (1+Z(n+1))) 2^{117a^3}(q-1)^{-1} (2^{4a+1-n})^{\frac{q-1}{8a^4}} (2^{2a+5} \frac{\mu(F)}{\mu(G)})^{\frac{1}{q} - \frac{1}{2}} \|f\|_2\|\mathbf{1}_{G\setminus G'}\|_2`
+$$`\begin{aligned}
+&\sum_{k \ge 0} \sum_{n \ge k} (n + (2n+4) + 2(2n+4) (1+Z(n+1))) \\
+&2^{117a^3}(q-1)^{-1} (2^{4a+1-n})^{\frac{q-1}{8a^4}} \\
+&(2^{2a+5} \frac{\mu(F)}{\mu(G)})^{\frac{1}{q} - \frac{1}{2}} \|f\|_2\|\mathbf{1}_{G\setminus G'}\|_2
+\end{aligned}`
 for the left hand side of `forestcompleft`. Because $`|f| \le \mathbf{1}_F`,
 we have $`\|f\|_2 \le \mu(F)^{1/2}`, and we have
 $`\|\mathbf{1}_{G\setminus G'}\|_2 \le \mu(G)^{1/2}`. Using this and
@@ -9373,10 +9385,14 @@ $`I \in \mathcal{D}` for each locally integrable $`f`, and hence is bounded,
 has bounded support and is integrable. Let $`g` be another function with the
 same three properties. Then $`\bar g S_{1,\fu}f` is integrable, and we have
 $$`\Bigg|\int \bar g(y) S_{1,\fu}f(y) \, \mathrm{d}\mu(y)\Bigg|`
-$$`= \Bigg|\sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16 D^{s(I)}))} \int_I \bar g(y) \, \mathrm{d}\mu(y)
-        \times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\s(J)\le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y)\Bigg|`
-$$`\le \sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16D^{s(I)}))} \int_{B(c(I), 16D^{s(I)})} | g(y)| \, \mathrm{d}\mu(y)
- \times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\ s(J) \le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y).`
+$$`\begin{aligned}
+&= \Bigg|\sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16 D^{s(I)}))} \int_I \bar g(y) \, \mathrm{d}\mu(y) \\
+&\times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\s(J)\le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y)\Bigg|
+\end{aligned}`
+$$`\begin{aligned}
+&\le \sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16D^{s(I)}))} \int_{B(c(I), 16D^{s(I)})} | g(y)| \, \mathrm{d}\mu(y) \\
+&\times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\ s(J) \le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y).
+\end{aligned}`
 Changing the order of summation and using
 $`J \subset B(c(I), 16 D^{s(I)})` to bound the first average integral by
 $`M_{\mathcal{B},1}|g|(y)` for any $`y \in J`, we obtain
@@ -10639,8 +10655,10 @@ $$`\le \frac{2^{128a^3}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \left(\frac{\rho(y, y'
 :::proof "Holder-correlation-tile"
 Proof. By `definetp*`, we have
 $$`|e(\fcc(\fu)(y)) T_{\fp}^* g(y) - e(\fcc(\fu)(y')) T_{\fp}^* g(y')|`
-$$`=\bigg| \int_{E(\fp)} e(\tQ(x)(x) - \tQ(x)(y) + \fcc(\fu)(y)) \overline{K_{\ps(\fp)}(x, y)} g(x)
-            - e(\tQ(x)(x) - \tQ(x)(y') + \fcc(\fu)(y')) \overline{K_{\ps(\fp)}(x, y')} g(x) \, \mathrm{d}\mu(x)\bigg|`
+$$`\begin{aligned}
+&=\bigg| \int_{E(\fp)} e(\tQ(x)(x) - \tQ(x)(y) + \fcc(\fu)(y)) \overline{K_{\ps(\fp)}(x, y)} g(x) \\
+&- e(\tQ(x)(x) - \tQ(x)(y') + \fcc(\fu)(y')) \overline{K_{\ps(\fp)}(x, y')} g(x) \, \mathrm{d}\mu(x)\bigg|
+\end{aligned}`
 $$`\leq\int_{E(\fp)} |g(x)| |e(\tQ(x)(y) - \tQ(x)(y') - \fcc(\fu)(y) + \fcc(\fu)(y'))\overline{K_{\ps(\fp)}(x, y)}
             - \overline{K_{\ps(\fp)}(x, y')}| \, \mathrm{d}\mu(x)`
 $$`\leq\int_{E(\fp)} |g(x)| |e(-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')) - 1|
@@ -10671,8 +10689,11 @@ $$`\mu(B(x, D^{\ps(\fp)})) \ge 2^{-3a} \mu(B(\pc(\fp), 4D^{\ps(\fp)})).`
 Combining the above with `eq-Ks-size`, `eq-Ks-smooth` and
 `eq-lem-Tile-holder-im1`, we obtain
 that the sum of the terms in `T*Holder1b` and `T*Holder1` is bounded by
-$$`\frac{2^{3a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)}|g(x)| \, \mathrm{d}\mu(x) \times
-            (2^{102a^3} \cdot 10 \cdot 2^{6a} \left(\frac{\rho(y,y')}{ D^{\ps(\fp)}}\right)^{1/a} + 2^{127a^3} \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a})`
+$$`\begin{aligned}
+&\frac{2^{3a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)}|g(x)| \, \mathrm{d}\mu(x) \\
+&\times
+            (2^{102a^3} \cdot 10 \cdot 2^{6a} \left(\frac{\rho(y,y')}{ D^{\ps(\fp)}}\right)^{1/a} + 2^{127a^3} \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a})
+\end{aligned}`
 Since $`\rho(y,y') \le 10 D^{\ps(\fp)}`, we conclude
 that the sum of the terms in `T*Holder1b` and `T*Holder1` is bounded by
 $$`\frac{2^{128a^3}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a} \int_{E(\fp)}|g(x)| \, \mathrm{d}\mu(x).`
@@ -10693,8 +10714,12 @@ It follows from the definition of $`\psi` that
 $$`\psi(x) \le \max\{0, (2 - 4x)^{1/a}\}.`
 Now for all $`x\in E(\fp)`, it follows by the triangle inequality and
 `eq-vol-sp-cube` that
-$$`2 - 4D^{-\ps(\fp)}\rho(x,y)\leq 2 - 4D^{-\ps(\fp)}\rho(y, \pc(\fp)) + 4 D^{-\ps(\fp)}\rho(x, \pc(\fp))
-\leq 18 - 4 D^{-\ps(\fp)} \rho(y, \pc(\fp)) \leq 4 D^{-\ps(\fp)}\rho(y,y') - 2.`
+$$`\begin{aligned}
+&2 - 4D^{-\ps(\fp)}\rho(x,y) \\
+&\leq 2 - 4D^{-\ps(\fp)}\rho(y, \pc(\fp)) + 4 D^{-\ps(\fp)}\rho(x, \pc(\fp)) \\
+&\leq 18 - 4 D^{-\ps(\fp)} \rho(y, \pc(\fp)) \\
+&\leq 4 D^{-\ps(\fp)}\rho(y,y') - 2.
+\end{aligned}`
 Combining the above with the previous estimate on $`\psi`, we get
 $$`\psi(D^{-\ps(\fp)}\rho(x,y)) \le 4 (D^{-\ps(\fp)}\rho(y,y'))^{1/a}.`
 Further, we obtain from the doubling property `doublingx` and
@@ -12154,7 +12179,12 @@ Taking square roots, it follows that for all $`g`
 $$`\left\|\sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp}^* g\right\|_2 \le 2^{439a^3-\frac{n}{2}} \|g\|_2.`
 On the other hand, we have by disjointedness of the sets $`E_j` from
 {bpref "disjoint-row-support"}[] and the triangle inequality
-$$`\left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2^2 = \left\|\sum_{j=1}^{2^n} \mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\right\|_2^2 \le \sum_{j = 1}^{2^n} \|\mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2 \le \sum_{j = 1}^{2^n} \|\mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2.`
+$$`\begin{aligned}
+&\left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2^2 \\
+&= \left\|\sum_{j=1}^{2^n} \mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\right\|_2^2 \\
+&\le \sum_{j = 1}^{2^n} \|\mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2 \\
+&\le \sum_{j = 1}^{2^n} \|\mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2.
+\end{aligned}`
 Now with $`|f| \le \mathbf{1}_F` and {bpref "row-bound"}[] we obtain
 $`\| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2^2 = \left| \int_X \overline{\mathbf{1}_G T_{\mathfrak{R}_j} f} T_{\mathfrak{R}_j} f \right| = \left| \int_X \overline{T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f} \mathbf{1}_F f \right| \le \|f\|_2 \| \mathbf{1}_F T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \le 2^{283a^3-n/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \|f\|_2.`
 Dividing this last inequality by the finite
@@ -13447,14 +13477,14 @@ $$`
 `
 
 Using the bound on $`K` and the doubling condition, the first term is at most
-$$`
-\frac{2^{a^3}}{\mu(B(x,r))}
-\int_{r\le\rho(x,y)<2r}|g(y)|\,d\mu(y)
-\le
+$$`\begin{aligned}
+&\frac{2^{a^3}}{\mu(B(x,r))}
+\int_{r\le\rho(x,y)<2r}|g(y)|\,d\mu(y) \\
+&\le
 \frac{2^{a^3}2^a}{\mu(B(x,2r))}
-\int_{\rho(x,y)<2r}|g(y)|\,d\mu(y)
-\le 2^{a^3+a}Mg(x).
-`
+\int_{\rho(x,y)<2r}|g(y)|\,d\mu(y) \\
+&\le 2^{a^3+a}Mg(x).
+\end{aligned}`
 Similarly, on the domain of the third term the triangle inequality and the
 assumption on $`x'` give $`\rho(x',y)<3r`, so that term is at most
 $$`
@@ -13778,12 +13808,12 @@ which is the desired bound for $`F_1`.
 
 For $`F_2`, we may similarly assume $`Mg(x)>0`. By
 {bpref "calderon-zygmund-weak-1-1"}[], its measure is at most
-$$`
-\frac{2^{a^3+19a}}{2^{a^3+20a+2}Mg(x)}
-\int\left|g\mathbf{1}_{B(x,\frac R2)}\right|(y)\,d\mu(y)
-\le \frac1{2^{a+2}Mg(x)}\mu(B(x,\tfrac R2))Mg(x)
-\le\frac{\mu(B(x,\frac R4))}{4}.
-`
+$$`\begin{aligned}
+&\frac{2^{a^3+19a}}{2^{a^3+20a+2}Mg(x)}
+\int\left|g\mathbf{1}_{B(x,\frac R2)}\right|(y)\,d\mu(y) \\
+&\le \frac1{2^{a+2}Mg(x)}\mu(B(x,\tfrac R2))Mg(x) \\
+&\le\frac{\mu(B(x,\frac R4))}{4}.
+\end{aligned}`
 This proves the desired bound for $`F_2`.
 :::
 
@@ -15233,7 +15263,8 @@ $$`
 Proof. First,
 $$`
 \begin{aligned}
-\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}
+&\mu\{x\in X\setminus\Omega:F(x)>\alpha/8\}
+\\
 &\le\frac8\alpha\int_{X\setminus\Omega}F(x)\,d\mu(x)\\
 &\le\frac8\alpha\int_{X\setminus\Omega}
 2^{a^3+2a+1}c\alpha\sum_j
@@ -16630,10 +16661,13 @@ As $`e^{2ix}\ne1`, we may divide by $`1-e^{2ix}` and insert this into
 $$`L''(x)=\frac1N\frac{e^{i2Nx}}{1-e^{-ix}}
 \frac{1-e^{i2Nx}}{1-e^{2ix}},`
 and, using the nonnegativity of the real part of $`e^{ix}`,
-$$`|L''(x)|\le \frac2N\frac1{|1-e^{ix}|}\frac1{|1-e^{2ix}|}
-=\frac2N\frac1{|1-e^{ix}|^2}\frac1{|1+e^{ix}|}
-\le \frac{2r}{|1-e^{ix}|^2}
-\le 2\left(1+\frac{r}{|1-e^{ix}|^2}\right).`
+$$`\begin{aligned}
+&|L''(x)| \\
+&\le \frac2N\frac1{|1-e^{ix}|}\frac1{|1-e^{2ix}|} \\
+&=\frac2N\frac1{|1-e^{ix}|^2}\frac1{|1+e^{ix}|} \\
+&\le \frac{2r}{|1-e^{ix}|^2} \\
+&\le 2\left(1+\frac{r}{|1-e^{ix}|^2}\right).
+\end{aligned}`
 For $`|x|\in [r,\pi]`, one checks
 $`1+\frac{r}{|1-e^{ix}|^2}\le 5k_r(x)`. Thus the estimates above show that
 $`|L''(x)|\le 10k_r(x)` in this range. Together with the previous
@@ -17127,10 +17161,12 @@ $$`\frac{1}{2\pi}\lim_{r\to 0^+}\left|
 \int_{r<|x-y|<1} g(y)\max(|x-y|,0)K_N(x-y)\,dy\right|.`
 Bounding the limit by a supremum, rewriting with the preceding identity, and
 using the triangle inequality gives
-$$`\le \frac{1}{2\pi}\sup_{r>0}\left|
-\int_{r<|x-y|<1} g(y)e^{-iNy}\kappa(x-y)\,dy\right|
-+ \frac{1}{2\pi}\sup_{r>0}\left|
-\int_{r<|x-y|<1} \overline g(y)e^{-iNy}\kappa(x-y)\,dy\right|.`
+$$`\begin{aligned}
+&\le \frac{1}{2\pi}\sup_{r>0}\left|
+\int_{r<|x-y|<1} g(y)e^{-iNy}\kappa(x-y)\,dy\right| \\
+&+ \frac{1}{2\pi}\sup_{r>0}\left|
+\int_{r<|x-y|<1} \overline g(y)e^{-iNy}\kappa(x-y)\,dy\right|.
+\end{aligned}`
 By the definition of $`T`, this is bounded by
 $$`\frac{1}{2\pi}(Tg(x)+T\bar g(x)).`
 :::
