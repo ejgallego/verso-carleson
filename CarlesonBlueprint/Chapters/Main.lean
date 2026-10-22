@@ -1672,10 +1672,10 @@ We also record the following basic estimates for the kernels $K_s$.
 Let $`-S\le s\le S` and $`x,y,y'\in X`. If $`K_s(x,y)\neq 0`, then we have
 $$`\frac{1}{4} D^{s-1} \leq \rho(x,y) \leq \frac{1}{2} D^s.`
 We have
-$$`|K_s(x,y)|\le \frac{2^{102 a^3}}{\mu(B(x, D^{s}))},`
+{equation "eq-Ks-size"}[$$`|K_s(x,y)|\le \frac{2^{102 a^3}}{\mu(B(x, D^{s}))},`]
 and
-$$`|K_s(x,y)-K_s(x, y')|\le \frac{2^{127a^3}}{\mu(B(x, D^{s}))}
-        \left(\frac{ \rho(y,y')}{D^s}\right)^{\frac 1a}.`
+{equation "eq-Ks-smooth"}[$$`|K_s(x,y)-K_s(x, y')|\le \frac{2^{127a^3}}{\mu(B(x, D^{s}))}
+        \left(\frac{ \rho(y,y')}{D^s}\right)^{\frac 1a}.`]
 :::
 
 ```tex "kernel-summand" (slot := statement)
@@ -1711,17 +1711,17 @@ $$`|K_s(x,y)|\le |K(x,y)|\le \frac{2^{a^3}}{\mu(B(x,\frac 14 D^{s-1}))}.`
 Using $`D=2^{100a^2}` and the doubling property `doublingx` $`2 +100a^2` times
 estimates the last display by
 $$`\le \frac{2^{2a+101a^3}}{\mu(B(x, D^{s}))}.`
-Using $`a\ge 4` proves `eq-Ks-size`.
-To prove `eq-Ks-smooth` when $`2\rho(y,y') > \rho(x,y)`, use the lower bound
+Using $`a\ge 4` proves {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size].
+To prove {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth] when $`2\rho(y,y') > \rho(x,y)`, use the lower bound
 in `supp-Ks` and the inequality
-$`2\rho(y,y') > \frac{1}{4}D^{s-1}`. Then `eq-Ks-smooth` follows from the
-triangle inequality, `eq-Ks-size` and $`a \ge 4`.
+$`2\rho(y,y') > \frac{1}{4}D^{s-1}`. Then {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth] follows from the
+triangle inequality, {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size] and $`a \ge 4`.
 If $`2\rho(y,y') \le \rho(x,y)`, we rewrite
 $`|K_s(x,y)-K_s(x, y')|` as
 $$`|(K(x,y)-K(x,y')) \psi(D^{-s}\rho(x,y)) +
         K(x,y)(\psi(D^{-s}\rho(x,y))-\psi(D^{-s}\rho(x,y')))|.`
 An upper bound for $`|K(x,y)-K(x, y')|` is obtained similarly to the proof of
-`eq-Ks-size`, using `eqkernel-y-smooth` and the lower bound in `supp-Ks`
+{ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size], using `eqkernel-y-smooth` and the lower bound in `supp-Ks`
 $$`|K(x,y)-K(x, y')|\le \frac{2^{a^3}}{\mu(B(x, \frac 14 D^{s-1}))}
         \left(\frac{ \rho(y,y')}{\frac 14 D^{s-1}}\right)^{\frac 1a}.`
 As above, this is estimated by
@@ -1737,7 +1737,7 @@ by considering separately the cases $`\rho(y,y')/D^s \ge 1` and
 $`\rho(y,y')/D^s < 1`. In the former case, the inequality is trivial; in the
 latter case, it follows from the fact that $`\psi` is Lipschitz with constant
 $`4D`.
-Combining the above bounds and using $`a\ge 4` proves `eq-Ks-smooth` when
+Combining the above bounds and using $`a\ge 4` proves {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth] when
 $`2\rho(y,y') \le \rho(x,y)`.
 :::
 ```tex "kernel-summand" (slot := proof)
@@ -2118,7 +2118,7 @@ handle the case of the middle part, we employ {bpref "S-truncation"}[]. Here, we
 the fact that if $`\frac 1R\le R_1\le R_2\le R`, then $`s_1` and $`s_2` are in
 an interval $`[-S,S]` for some sufficiently large $`S` depending on $`R`. To
 handle the case of the boundary part, we use the triangle inequality and the
-properties `supp-Ks`, `eq-Ks-size` of $`K_s` and $`|f| \le \mathbf{1}_F` to
+properties `supp-Ks`, {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size] of $`K_s` and $`|f| \le \mathbf{1}_F` to
 obtain for arbitrary $`s` the inequality
 $$`\begin{aligned}
 &\left|\int_{R_1 < \rho(x,y) < R_2} K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y)\right| \\
@@ -7252,10 +7252,10 @@ Proof. If $`\varphi(y)` is not zero, then $`K_{s_1}(x_1, y)` is not zero and
 thus `supp-Ks` gives `eqt10`.
 
 
-We next have for $`y` with `eq-Ks-size`
+We next have for $`y` with {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size]
 $$`|\varphi(y)|\le
     \frac{2^{204 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}`
-and for $`y'\neq y` additionally with `eq-Ks-smooth`
+and for $`y'\neq y` additionally with {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth]
 $$`|\varphi(y)-\varphi(y')|`
 $$`\le
  |K_{s_1}(x_1,y)-K_{s_1}(x_1,y')||
@@ -8676,7 +8676,7 @@ $`\tQ(x) \in \Omega(\fp') \subset B_{\fp'}(\fcc(\fp'), 1)` by
 $$`\le 5 \cdot 2^{4a} 2^{s - \overline{\sigma}(\fu, x)}.`
 
 
-Using `eq-Ks-size`, it follows that `eq-term-A` is bounded by
+Using {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size], it follows that `eq-term-A` is bounded by
 $$`5\cdot 2^{103a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} \frac{1}{\mu(B(x,D^s))}\int_{B(x,0.5D^{s})}|f(y)|\,\mathrm{d}\mu(y).`
 By `eq-J-partition`, the collection $`\mathcal{J}` is a partition of
 $`\bigcup_{I \in \mathcal{D}} I`, so this is estimated by
@@ -8868,7 +8868,7 @@ $$`\le 2^{128a^3} S_{1,\fu} P_{\mathcal{J}(\fT(\fu))}|f|(x').`
 Proof. We have for $`J \in \mathcal{J}(\fT(\fu))`
 $$`\int_J K_{s}(x,y)(1 - P_{\mathcal{J}(\fT(\fu))})f(y) \, \mathrm{d}\mu(y)`
 $$`= \int_J \frac{1}{\mu(J)} \int_J K_s(x,y) - K_s(x,z) \, \mathrm{d}\mu(z) \,f(y) \, \mathrm{d}\mu(y).`
-By `eq-Ks-smooth` and `eq-vol-sp-cube`, we have for $`y, z \in J`
+By {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth] and `eq-vol-sp-cube`, we have for $`y, z \in J`
 $$`|K_s(x,y) - K_s(x,z)| \le \frac{2^{127a^3}}{\mu(B(x, D^s))} \left(\frac{8 D^{s(J)}}{D^s}\right)^{1/a}.`
 
 
@@ -10683,11 +10683,11 @@ $$`\le 5 \cdot 2^{6a - k}.`
 By definition of $`k`, we have
 $$`-k < 1 - \frac{1}{a} \log_2\left(\frac{10 D^{\ps(\fp)}}{\rho(y,y')}\right),`
 which gives
-$$`|-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')| \le 10 \cdot 2^{6a} \left(\frac{\rho(y,y')}{10 D^{\ps(\fp)}}\right)^{1/a}.`
+{equation "eq-lem-Tile-holder-im1"}[$$`|-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')| \le 10 \cdot 2^{6a} \left(\frac{\rho(y,y')}{10 D^{\ps(\fp)}}\right)^{1/a}.`]
 For all $`x \in \scI(\fp)`, we have by `doublingx` that
 $$`\mu(B(x, D^{\ps(\fp)})) \ge 2^{-3a} \mu(B(\pc(\fp), 4D^{\ps(\fp)})).`
-Combining the above with `eq-Ks-size`, `eq-Ks-smooth` and
-`eq-lem-Tile-holder-im1`, we obtain
+Combining the above with {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size], {ref "eq-Ks-smooth" (domain := CarlesonBlueprint.equation)}[eq-Ks-smooth] and
+{ref "eq-lem-Tile-holder-im1" (domain := CarlesonBlueprint.equation)}[eq-lem-Tile-holder-im1], we obtain
 that the sum of the terms in `T*Holder1b` and `T*Holder1` is bounded by
 $$`\begin{aligned}
 &\frac{2^{3a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)}|g(x)| \, \mathrm{d}\mu(x) \\
@@ -10985,7 +10985,7 @@ by `eq-vol-sp-cube` and the triangle inequality. Using the doubling property
 $$`\mu(B(x, D^{\ps(\fp)})) \ge 2^{-5a} \mu(B(c(J), 16D^{\ps(\fp)})).`
 
 
-Using `definetp*`, `eq-Ks-size` and that $`a \ge 4`, we bound
+Using `definetp*`, {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size] and that $`a \ge 4`, we bound
 `eq-sep-tree-aux-3` by
 $$`2^{103a^3}\sum_{s = s(J)}^{s(J) + 3} \sum_{\substack{\fp \in \fP, \ps(\fp) = s\\B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset}} \frac{1}{\mu(B(c(J), 16 D^s)} \int_{E(\fp)} |g| \, \mathrm{d}\mu.`
 For each $`I \in \mathcal{D}`, the sets $`E(\fp)` for $`\fp \in \fP` with
@@ -11708,7 +11708,7 @@ $`s_1 := \lfloor\frac{Zn}{202a^3} - 2\rfloor`
 $$`= \left(\sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \left| \sum_{s=s_1}^{2S} \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\ \ps(\fp) = s(J) - s\\ J \cap B(\scI(\fp)) \ne \emptyset}} T_{\fp}^* g_2(y) \right| \, \mathrm{d}\mu(y) \right)^2 \right)^{1/2}.`
 Then we apply the triangle inequality and Minkowski's inequality to get
 $$`\le \sum_{s=s_1}^{2S} \left( \sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\ \ps(\fp) = s(J) - s\\ J \cap B(\scI(\fp)) \ne \emptyset}} |T_{\fp}^* g_2(y)| \, \mathrm{d}\mu(y) \right)^2\right)^{1/2}.`
-We have by {bpref "adjoint-tile-support"}[] and `eq-Ks-size`
+We have by {bpref "adjoint-tile-support"}[] and {ref "eq-Ks-size" (domain := CarlesonBlueprint.equation)}[eq-Ks-size]
 $$`|T_{\fp}^* g_2(y)| \le 2^{102a^3} \mathbf{1}_{B(\pc(\fp), 8D^{\ps(\fp)})}(y) \int_{E(\fp)} \frac{1}{\mu(B(x, D^{\ps(\fp)}))} |g_2(x)| \, \mathrm{d}\mu(x).`
 Using the doubling property `doublingx`, it follows that
 $$`\mu(B(\pc(\fp), 8D^{\ps(\fp)})) \le 2^{4a} \mu(B(x, D^{\ps(\fp)})).`
@@ -12186,11 +12186,21 @@ $$`\begin{aligned}
 &\le \sum_{j = 1}^{2^n} \|\mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2.
 \end{aligned}`
 Now with $`|f| \le \mathbf{1}_F` and {bpref "row-bound"}[] we obtain
-$`\| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2^2 = \left| \int_X \overline{\mathbf{1}_G T_{\mathfrak{R}_j} f} T_{\mathfrak{R}_j} f \right| = \left| \int_X \overline{T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f} \mathbf{1}_F f \right| \le \|f\|_2 \| \mathbf{1}_F T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \le 2^{283a^3-n/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \|f\|_2.`
+$$`\begin{aligned}
+&\| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2^2 \\
+&= \left| \int_X \overline{\mathbf{1}_G T_{\mathfrak{R}_j} f} T_{\mathfrak{R}_j} f \right| \\
+&= \left| \int_X \overline{T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f} \mathbf{1}_F f \right| \\
+&\le \|f\|_2 \| \mathbf{1}_F T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \\
+&\le 2^{283a^3-n/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2 \|f\|_2.
+\end{aligned}`
 Dividing this last inequality by the finite
 $`\| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2`, substituting back and taking
 square roots we get
-$`\left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2 \le 2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} 2^{-\frac{n}{2}} (\sum_{j = 1}^{2^n} \|f\|_2^2)^{\frac{1}{2}} = 2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} \|f\|_2.`
+$$`\begin{aligned}
+&\left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2 \\
+&\le 2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} 2^{-\frac{n}{2}} (\sum_{j = 1}^{2^n} \|f\|_2^2)^{\frac{1}{2}} \\
+&= 2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} \|f\|_2.
+\end{aligned}`
 {bpref "forest-operator"}[] follows by taking the product of the
 $`(2 - \frac{2}{q})`-th power of `eq-forest-bound-1` and the
 $`(\frac{2}{q} - 1)`-st power of `eq-forest-bound-2`.

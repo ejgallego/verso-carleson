@@ -11,7 +11,10 @@ from pathlib import Path
 from urllib.parse import urljoin, urlsplit, unquote
 
 
-EQUATION_LABELS = ("def-hlm", "eqdifflhil")
+EQUATION_LABELS = (
+    "def-hlm", "eqdifflhil",
+    "eq-Ks-size", "eq-Ks-smooth", "eq-lem-Tile-holder-im1",
+)
 SECTION_LABEL = "sec-TT*-T*T"
 SITE_URL = "https://blueprint.invalid/"
 
