@@ -12,7 +12,7 @@ from urllib.parse import urljoin, urlsplit, unquote
 
 
 EQUATION_LABELS = ("def-hlm", "eqdifflhil")
-SECTION_LABEL = "sec-TT___-T___T"
+SECTION_LABEL = "sec-TT*-T*T"
 SITE_URL = "https://blueprint.invalid/"
 
 

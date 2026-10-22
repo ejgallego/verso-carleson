@@ -6531,7 +6531,7 @@ tag := "antichainboundary"
 
 Let an antichain $`\mathfrak{A}` and functions $`f`, $`g` as in
 {bpref "antichain-operator"}[] be given. We prove `eq-antiprop` in
-{ref "sec-TT___-T___T"}[The density arguments] as the
+{ref "sec-TT*-T*T"}[The density arguments] as the
 geometric mean of two inequalities, each involving one of the two densities.
 One of these two inequalities will need a careful estimate formulated in
 {bpref "tile-correlation"}[] of the $`TT^*` correlation between two tile operators.
